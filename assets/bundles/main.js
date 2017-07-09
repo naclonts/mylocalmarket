@@ -118,6 +118,17 @@ function addSummary(market, parent) {
     parent.append(summary);
 }
 
+function addError(err, parent, message = "Looks like there was an error with this request.") {
+    console.log(err);
+    const summary = $('<div/>').addClass('market-summary');
+    const name = $('<h3/>').addClass('market-name');
+    name.text('Oops!');
+    summary.append(name);
+    summary.append($('<p/>').text(message));
+
+    parent.append(summary);
+}
+
 // Create all tag elements to filter by market products, along with the "Clear Tags" option
 function makeTags(markets, parent) {
     $('#clear-filters').removeClass('hidden');
@@ -224,14 +235,14 @@ function init() {
             // Display market data
             makeSummaries(markets, $('#summary-wrapper'), 9);
 
-            // Functionality for "more results" button
+            // Functionality for "more results" button(
             $('#more-results').click(e => {
                 makeSummaries(markets, $('#summary-wrapper'), 9);
             });
 
             // Show tags to toggle/filter with
             makeTags(markets, $('#tag-toggle-wrapper'));
-        }).catch(err => console.log(err));
+        }).catch(err => addError(err, $('#summary-wrapper'), "Looks like we weren't able to find anything in zip " + '"' + ($('#zipcode').val() || 'Zip code') + '".'));
     });
 }
 
