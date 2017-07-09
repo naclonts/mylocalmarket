@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+{% load render_bundle from webpack_loader %}
+
+{% block content %}
+    <h3>{{ hello_message }}</h3>
+    <div>
+            <div class="search-wrapper">
+                <input id="zipcode" type="text" placeholder="Zip code">
+                <button class="big-button" id="submit-search">Search</button>
+            </div>
+
+            <div id="tag-toggle-wrapper" class="tag-toggle-wrapper">
+                <button id="clear-filters" class="tag-toggle hidden">Clear Filters</button>
+                <!-- Data filled in by JS -->
+            </div>
+
+            <div class="market-summary-wrapper" id="summary-wrapper">
+                <!-- Data filled in by JS -->
+            </div>
+
+            <div class="more-results-wrapper">
+                <button class="big-button" id="more-results">More results</button>
+            </div>
+        </div>
+{% endblock %}
+
+{% block scripts %}
+{% render_bundle 'main' %}
+{% endblock %}

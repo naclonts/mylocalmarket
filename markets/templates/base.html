@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>My Local Market</title>
+    <meta name="author" content="">
+    <meta name="description" content="Connect with local farmer's markets in your area">
+    <meta name="keywords" content="farmers,markets,local,food,homemade,products">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" type="text/css">
+</head>
+
+<body>
+    {% block content %}{% endblock %}
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>
