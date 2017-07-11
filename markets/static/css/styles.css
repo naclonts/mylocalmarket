@@ -88,17 +88,26 @@ input[type="text"] {
 }
 
 /* Title */
+.market-summary {
+    display: flex;
+    flex-wrap: wrap;
+    min-height: 12em;
+}
 .market-summary h3, .market-name {
     font-family: serif;
     color: #444;
-    min-height: 2em;
 }
 
 .market-summary a, a:visited {
+    margin: 0;
     color: #444;
 }
 .market-summary a:hover {
     color: #666;
+}
+
+.market-address {
+    text-decoration: none;
 }
 
 

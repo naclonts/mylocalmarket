@@ -32,19 +32,24 @@ function addSummary(market, parent) {
 
     // Create header for element
     let name = $('<h3/>').addClass('market-name');
-    let link = $('<a/>').attr('href', market['Website'] || "#")
-                        .text(market['MarketName']);
-    name.append(link);
+    let detailLink = api.marketDetailPage(market);
+    name.append(detailLink);
 
     // make address linking to maps
-    const address = document.createElement('p');
+    const address = $('<a/>').addClass('market-address');
     const mapLink = api.mapsLink(market);
     const text = api.address(market);
-    address.innerHTML = '<a href=' + mapLink + '>' + text + '</a>';
+    address.attr('href', mapLink);
+    address.text(text);
+
+    // link to website
+    let webpage = $('<a/>').attr('href', market['Website'] || "#")
+                           .text('Webpage');
 
     // update DOM
     summary.append(name);
     summary.append(address);
+    summary.append(webpage);
     parent.append(summary);
 }
 

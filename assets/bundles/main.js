@@ -103,18 +103,23 @@ function addSummary(market, parent) {
 
     // Create header for element
     let name = $('<h3/>').addClass('market-name');
-    let link = $('<a/>').attr('href', market['Website'] || "#").text(market['MarketName']);
-    name.append(link);
+    let detailLink = __WEBPACK_IMPORTED_MODULE_0__market_data_js__["d" /* marketDetailPage */](market);
+    name.append(detailLink);
 
     // make address linking to maps
-    const address = document.createElement('p');
+    const address = $('<a/>').addClass('market-address');
     const mapLink = __WEBPACK_IMPORTED_MODULE_0__market_data_js__["c" /* mapsLink */](market);
     const text = __WEBPACK_IMPORTED_MODULE_0__market_data_js__["a" /* address */](market);
-    address.innerHTML = '<a href=' + mapLink + '>' + text + '</a>';
+    address.attr('href', mapLink);
+    address.text(text);
+
+    // link to website
+    let webpage = $('<a/>').attr('href', market['Website'] || "#").text('Webpage');
 
     // update DOM
     summary.append(name);
     summary.append(address);
+    summary.append(webpage);
     parent.append(summary);
 }
 
@@ -258,21 +263,23 @@ $(document).ready(init);
 /* unused harmony export allDetails */
 /* harmony export (immutable) */ __webpack_exports__["c"] = mapsLink;
 /* harmony export (immutable) */ __webpack_exports__["a"] = address;
+/* harmony export (immutable) */ __webpack_exports__["d"] = marketDetailPage;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__http_promise__ = __webpack_require__(2);
 //  Wrapper for calls to retreive market data
 
 
-const BASE_URL = 'http://127.0.0.1:5000/yourmarket/api';
+const BASE_API_URL = 'http://127.0.0.1:5000/yourmarket/api/';
+const BASE_SITE_URL = 'http://127.0.0.1:8000/';
 
 // Return summary of markets near zip
 function local(zip, callback) {
-    const url = BASE_URL + '/zip/' + zip;
+    const url = BASE_API_URL + 'zip/' + zip;
     return __WEBPACK_IMPORTED_MODULE_0__http_promise__["a" /* get */](url, 'json');
 }
 
 // get detailed information for a certain market ID
 function detail(id) {
-    const url = BASE_URL + '/id/' + id;
+    const url = BASE_API_URL + 'id/' + id;
     return __WEBPACK_IMPORTED_MODULE_0__http_promise__["a" /* get */](url, 'json');
 }
 
@@ -294,6 +301,13 @@ function mapsLink(market) {
 function address(market) {
     const address = [market['street'], market['city'], market['zip']].join(', ');
     return address;
+}
+
+// internal page about a given market
+function marketDetailPage(market) {
+    let url = BASE_SITE_URL + 'market/' + market['FMID'];
+    let link = $('<a/>').attr('href', url).text(market['MarketName']);
+    return link;
 }
 
 /***/ }),
