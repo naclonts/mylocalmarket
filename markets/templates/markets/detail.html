@@ -6,8 +6,7 @@
 {% block content %}
     <h3>{{market.name}}</h3>
     <div>
-        <p>
-            {{market.address_street}}, {{market.address_city}}, {{market.address_zipcode}}
-        </p>
+        <p>{{market.address_street}}, {{market.address_city}}</p>
+        <p>{{market.address_state}}, {{market.address_zip}}</p>
     </div>
 {% endblock %}
