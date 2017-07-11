@@ -106,7 +106,7 @@ function tagPress(tag, allMarkets) {
 // @on {Bool} turn filter on (true) or off (false)
 function toggleFilter(markets, tag, on) {
     markets.data.map((market) => {
-        // if this market doesn't include tag, add (or remove) filter
+        // if this market doesn't include tag, add (or remove) a layer of filter
         if (market[tag] != 'Y') {
             market['filters'] += on ? 1 : -1;
         }

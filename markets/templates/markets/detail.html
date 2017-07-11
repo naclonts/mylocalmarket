@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load static %}
+{% load render_bundle from webpack_loader %}
+
+
+{% block content %}
+    <h3>{{market.name}}</h3>
+    <div>
+        <p>
+            {{market.address_street}}, {{market.address_city}}, {{market.address_zipcode}}
+        </p>
+    </div>
+{% endblock %}
