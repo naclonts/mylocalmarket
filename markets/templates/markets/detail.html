@@ -4,9 +4,13 @@
 
 
 {% block content %}
-    <h3>{{market.name}}</h3>
+<div class="market-summary">
+    <h3 class="market-name">{{market.name}}</h3>
     <div>
-        <p>{{market.address_street}}, {{market.address_city}}</p>
-        <p>{{market.address_state}}, {{market.address_zip}}</p>
+        <a class="market-address" href="{{market.MapsLink}}">
+            <p>{{market.address_street}}, {{market.address_city}}</p>
+            <p>{{market.address_state}}, {{market.address_zip}}</p>
+        </a>
     </div>
+</div>
 {% endblock %}
