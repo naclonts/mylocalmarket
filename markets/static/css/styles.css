@@ -81,7 +81,7 @@ input[type="text"] {
 .market-summary {
     padding: 0 10px;
     margin: 1%;
-    width: 15em;
+    min-width: 15em;
     min-height: 10em;
     border: 3px solid #666;
     font-family: sans-serif;
