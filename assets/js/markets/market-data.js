@@ -45,3 +45,8 @@ export function marketDetailPage(market) {
                         .text(market['MarketName']);
     return link;
 }
+
+export function marketSummary(market) {
+    let url = BASE_SITE_URL + 'market/' + market['FMID'];
+    return http.get(url, 'html');
+}

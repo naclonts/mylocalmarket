@@ -76,26 +76,30 @@ input[type="text"] {
     justify-content: center;
     align-items: center;
     font-size: 1.2em;
+    min-width: 15em;
 }
 
+.market-summary {
+
+}
+
+/* Summary info container */
 .market-summary {
     padding: 0 10px;
     margin: 1%;
-    min-width: 15em;
-    min-height: 10em;
     border: 3px solid #666;
     font-family: sans-serif;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    min-height: 12em;
 }
 
 /* Title */
-.market-summary {
-    display: flex;
-    flex-wrap: wrap;
-    min-height: 12em;
-}
 .market-summary h3, .market-name {
     font-family: serif;
     color: #444;
+    max-width: 15em;
 }
 
 .market-summary a, a:visited {

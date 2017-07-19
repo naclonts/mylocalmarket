@@ -1,1 +1,1 @@
-{"status":"done","chunks":{"main":[{"name":"main.js","path":"/home/nathan/code/mylocalmarket/assets/bundles/main.js"}]}}
+{"status":"done","error":"ModuleBuildError","message":"Module build failed: SyntaxError: Unexpected token (51:8)\n\n  49 | export function marketSummary(market) {\n  50 |     let url = BASE_SITE_URL + 'market/' + market['FMID'];\n> 51 |     let return http.get(url, 'html');\n     |         ^\n  52 | }\n  53 | \n","chunks":{"main":[{"name":"main.js","path":"/home/nathan/code/mylocalmarket/assets/bundles/main.js"}]}}

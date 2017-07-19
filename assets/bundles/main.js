@@ -99,28 +99,10 @@ function clearSummaries(markets, parent) {
 }
 
 function addSummary(market, parent) {
-    const summary = $('<div/>').addClass('market-summary');
-
-    // Create header for element
-    let name = $('<h3/>').addClass('market-name');
-    let detailLink = __WEBPACK_IMPORTED_MODULE_0__market_data_js__["d" /* marketDetailPage */](market);
-    name.append(detailLink);
-
-    // make address linking to maps
-    const address = $('<a/>').addClass('market-address');
-    const mapLink = __WEBPACK_IMPORTED_MODULE_0__market_data_js__["c" /* mapsLink */](market);
-    const text = __WEBPACK_IMPORTED_MODULE_0__market_data_js__["a" /* address */](market);
-    address.attr('href', mapLink);
-    address.text(text);
-
-    // link to website
-    let webpage = $('<a/>').attr('href', market['Website'] || "#").text('Webpage');
-
-    // update DOM
-    summary.append(name);
-    summary.append(address);
-    summary.append(webpage);
-    parent.append(summary);
+    __WEBPACK_IMPORTED_MODULE_0__market_data_js__["b" /* marketSummary */](market).then(data => {
+        const summary = $(data);
+        parent.append(summary);
+    });
 }
 
 function addError(err, parent, message = "Looks like there was an error with this request.") {
@@ -234,7 +216,7 @@ function init() {
         markets.lastDisplayed = 0;
 
         // generate new results
-        __WEBPACK_IMPORTED_MODULE_0__market_data_js__["b" /* local */]($('#zipcode').val()).then(data => {
+        __WEBPACK_IMPORTED_MODULE_0__market_data_js__["a" /* local */]($('#zipcode').val()).then(data => {
             markets.update(data);
 
             // Display market data
@@ -258,12 +240,13 @@ $(document).ready(init);
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["b"] = local;
+/* harmony export (immutable) */ __webpack_exports__["a"] = local;
 /* unused harmony export detail */
 /* unused harmony export allDetails */
-/* harmony export (immutable) */ __webpack_exports__["c"] = mapsLink;
-/* harmony export (immutable) */ __webpack_exports__["a"] = address;
-/* harmony export (immutable) */ __webpack_exports__["d"] = marketDetailPage;
+/* unused harmony export mapsLink */
+/* unused harmony export address */
+/* unused harmony export marketDetailPage */
+/* harmony export (immutable) */ __webpack_exports__["b"] = marketSummary;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__http_promise__ = __webpack_require__(2);
 //  Wrapper for calls to retreive market data
 
@@ -308,6 +291,11 @@ function marketDetailPage(market) {
     let url = BASE_SITE_URL + 'market/' + market['FMID'];
     let link = $('<a/>').attr('href', url).text(market['MarketName']);
     return link;
+}
+
+function marketSummary(market) {
+    let url = BASE_SITE_URL + 'market/' + market['FMID'];
+    return __WEBPACK_IMPORTED_MODULE_0__http_promise__["a" /* get */](url, 'html');
 }
 
 /***/ }),

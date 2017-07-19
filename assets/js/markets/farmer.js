@@ -1,6 +1,5 @@
 import * as api from './market-data.js';
 
-
 function makeSummaries(markets, parent, numberToAdd) {
     let i = markets.lastDisplayed;
     let added = 0;
@@ -28,29 +27,10 @@ function clearSummaries(markets, parent) {
 }
 
 function addSummary(market, parent) {
-    const summary = $('<div/>').addClass('market-summary');
-
-    // Create header for element
-    let name = $('<h3/>').addClass('market-name');
-    let detailLink = api.marketDetailPage(market);
-    name.append(detailLink);
-
-    // make address linking to maps
-    const address = $('<a/>').addClass('market-address');
-    const mapLink = api.mapsLink(market);
-    const text = api.address(market);
-    address.attr('href', mapLink);
-    address.text(text);
-
-    // link to website
-    let webpage = $('<a/>').attr('href', market['Website'] || "#")
-                           .text('Webpage');
-
-    // update DOM
-    summary.append(name);
-    summary.append(address);
-    summary.append(webpage);
-    parent.append(summary);
+    api.marketSummary(market).then((data) => {
+        const summary = $(data);
+        parent.append(summary);
+    });
 }
 
 function addError(err, parent, message="Looks like there was an error with this request.") {
