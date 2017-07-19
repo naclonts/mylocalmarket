@@ -48,4 +48,10 @@ def market_detail(request, market_id):
 
     # Refresh & save updated data
     market.save()
-    return render(request, 'markets/detail.html', {'market': market})
+
+    if request.is_ajax():
+        template = "markets/detail_data.html"
+    else:
+        template = "markets/detail.html"
+
+    return render(request, template, {'market': market})

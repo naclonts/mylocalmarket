@@ -13,7 +13,28 @@
 </head>
 
 <body>
-    {% block content %}{% endblock %}
+    <header class="market-header _fixed">
+        <div class="-container">
+            <a class="logo" href="#">My Local Market</a>
+            <nav class="navigation" role="navigation" aria-label="site navigation">
+                <ol class="-list">
+                    <li class="-item _current">
+                        <a class="-link" href="#">Farmer's Markets</a>
+                    </li>
+                    <li class="-item">
+                        <a class="-link" href="#">Favorites</a>
+                    </li>
+                    <li class="-item">
+                        <a class="-link" href="#">About</a>
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </header>
+
+    <div class="content-container">
+        {% block content %}{% endblock %}
+    </div>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
     {% block scripts %}{% endblock %}
