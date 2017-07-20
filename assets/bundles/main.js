@@ -208,15 +208,30 @@ function init() {
         }
     };
 
+    // Show button on searchbox click
+    $('#search-value').click(e => {
+        $('#submit-search').addClass('active-input');
+        $('#search').addClass('selected');
+        $(document).click(e => {
+            if (!$(e.target).is('input')) {
+                $('#search').removeClass('selected');
+                $('#submit-search').removeClass('active-input');
+            }
+        });
+    });
+
     // Listen for zip code search
     $('#submit-search').click(e => {
+        // prevent form submission
+        e.preventDefault();
+
         // clear old results
         $('.market-summary-wrapper').empty();
         markets.data = {};
         markets.lastDisplayed = 0;
 
         // generate new results
-        __WEBPACK_IMPORTED_MODULE_0__market_data_js__["a" /* local */]($('#zipcode').val()).then(data => {
+        __WEBPACK_IMPORTED_MODULE_0__market_data_js__["a" /* local */]($('#search-value').val()).then(data => {
             markets.update(data);
 
             // Display market data
@@ -226,7 +241,6 @@ function init() {
             $('#more-results').click(e => {
                 makeSummaries(markets, $('#summary-wrapper'), 9);
             });
-
             // Show tags to toggle/filter with
             makeTags(markets, $('#tag-toggle-wrapper'));
         }).catch(err => addError(err, $('#summary-wrapper'), "Looks like we weren't able to find anything in zip " + '"' + ($('#zipcode').val() || 'Zip code') + '".'));
