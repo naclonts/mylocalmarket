@@ -72,25 +72,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__market_data_js__ = __webpack_require__(1);
 
 
-function makeSummaries(markets, parent, numberToAdd) {
-    let i = markets.lastDisplayed;
-    let added = 0;
-    while (added < numberToAdd && i < markets.data.length) {
-        const market = markets.data[i];
-        i++;
-        // skip filtered out markets
-        if (market['filters'] > 0) continue;
-        addSummary(market, parent);
-        added++; // increment number added so far
-    }
-    markets.lastDisplayed = i;
-
-    // Display button to get more results
-    if (markets.hasMore()) {
-        $('#more-results').addClass('visible');
-    } else {
-        $('#more-results').removeClass('visible');
-    }
+// Todo: implement numberToAdd
+function summaries(zip, numberToAdd) {
+    return __WEBPACK_IMPORTED_MODULE_0__market_data_js__["a" /* local */](zip);
 }
 
 function clearSummaries(markets, parent) {
@@ -186,28 +170,6 @@ function clearFilters(markets) {
 }
 
 function init() {
-    // Market data singleton
-    const markets = {
-        data: [],
-        lastDisplayed: 0,
-        filters: [],
-        // hasMore: true if there are more markets to display
-        hasMore: function () {
-            // can't use arrow function due to 'this' binding
-            return this.data != undefined && this.lastDisplayed < this.data.length;
-        },
-        redraw: function () {
-            clearSummaries(this, $('#summary-wrapper'));
-            makeSummaries(this, $('#summary-wrapper'), 9);
-        },
-        update: function (data) {
-            this.data = data;
-            this.data.map(market => {
-                market['filters'] = 0;
-            });
-        }
-    };
-
     // Show button on searchbox click
     $('#search-value').click(e => {
         $('.market-header').addClass('searchbar-selected');
@@ -225,23 +187,11 @@ function init() {
 
         // clear old results
         $('.market-summary-wrapper').empty();
-        markets.data = {};
-        markets.lastDisplayed = 0;
-
-        // generate new results
-        __WEBPACK_IMPORTED_MODULE_0__market_data_js__["a" /* local */]($('#search-value').val()).then(data => {
-            markets.update(data);
-
-            // Display market data
-            makeSummaries(markets, $('#summary-wrapper'), 9);
-
-            // Functionality for "more results" button(
-            $('#more-results').click(e => {
-                makeSummaries(markets, $('#summary-wrapper'), 9);
-            });
-            // Show tags to toggle/filter with
-            makeTags(markets, $('#tag-toggle-wrapper'));
-        }).catch(err => addError(err, $('#summary-wrapper'), "Looks like we weren't able to find anything in zip " + '"' + ($('#zipcode').val() || 'Zip code') + '".'));
+        console.log($('#search-value').val());
+        // load new results
+        summaries($('#search-value').val(), 9).then(html => {
+            $('#summary-wrapper').append($(html));
+        }).catch(err => addError(err, $('#summary-wrapper'), "Looks like we weren't able to find anything in zip " + '"' + ($('#zipcode').val() || 'Zip code') + '".'));;
     });
 }
 
@@ -268,8 +218,8 @@ const BASE_SITE_URL = 'http://127.0.0.1:8000/';
 
 // Return summary of markets near zip
 function local(zip, callback) {
-    const url = BASE_API_URL + 'zip/' + zip;
-    return __WEBPACK_IMPORTED_MODULE_0__http_promise__["a" /* get */](url, 'json');
+    const url = BASE_SITE_URL + 'zip/' + zip;
+    return __WEBPACK_IMPORTED_MODULE_0__http_promise__["a" /* get */](url, 'html');
 }
 
 // get detailed information for a certain market ID

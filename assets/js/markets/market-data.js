@@ -6,8 +6,8 @@ const BASE_SITE_URL = 'http://127.0.0.1:8000/';
 
 // Return summary of markets near zip
 export function local(zip, callback) {
-    const url = BASE_API_URL + 'zip/' + zip;
-    return http.get(url, 'json');
+    const url = BASE_SITE_URL + 'zip/' + zip;
+    return http.get(url, 'html');
 }
 
 // get detailed information for a certain market ID
