@@ -15,7 +15,7 @@
 <body>
     <header class="market-header _fixed">
         <div class="-container">
-            <a class="logo" href="#">My Local Market</a>
+            <a class="logo -link" href="{% url 'home' %}">My Local Market</a>
 
             <form id="search" method="get" class="searchbar" autocomplete="off" role="search">
                 <svg role="icon" class="svg-icon iconSearch" width="18" height="18" viewBox="0 0 18 18">
@@ -31,7 +31,6 @@
                     </svg>
                 </button>
             </form>
-
 
             <nav class="navigation" role="navigation" aria-label="site navigation">
                 <ol class="-list">

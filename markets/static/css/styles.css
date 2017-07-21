@@ -54,19 +54,21 @@
     border-bottom: 2px solid hsl(26, 90%, 55%);
 }
 
-.market-header .navigation .-link {
+.market-header .-link {
     display: inline-block;
     line-height: 58px;
     height: 57px;
+    color: hsl(207, 7%, 35%);
     white-space: nowrap;
     position: relative;
     padding: 0 8px;
     transition: background-color cubic-bezier(.165, .84, .44, 1) .25s,
                 border-bottom-color ease-in-out .25s;
 }
-.market-header .navigation .-link:hover,
-.market-header .navigation .-link:focus {
+.market-header .-link:hover,
+.market-header .-link:focus {
     background-color: #eff0f1;
+    color: hsl(203, 6%, 15%);
     text-decoration: none;
     outline: none;
 }

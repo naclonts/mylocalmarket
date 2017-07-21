@@ -118,7 +118,7 @@ function init() {
 
         // clear old results
         $('.market-summary-wrapper').empty();
-        console.log($('#search-value').val());
+        
         // load new results
         summaries($('#search-value').val(), 9).then((html) => {
             $('#summary-wrapper').append($(html));
