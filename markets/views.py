@@ -4,6 +4,8 @@ from django.views.generic.base import TemplateView
 
 from .models import Market
 
+import json, requests
+
 def index(request):
     """
     index
@@ -42,8 +44,22 @@ def market_detail(request, market_id):
     market = get_object_or_404(Market, id=market_id)
 
     if request.is_ajax():
-        template = "markets/detail_data.html"
+        template = 'markets/detail_data.html'
     else:
-        template = "markets/detail.html"
+        template = 'markets/detail.html'
 
     return render(request, template, {'market': market})
+
+
+ZIP_API_KEY = 'BbWbQdEf2ILFRjyKnbGpLf4V60DSBFrdQnpHB3WEMHjE1Roo35OOlTJrUnkw2LJS'
+def markets_within_zip(request, zip):
+    url = 'https://www.zipcodeapi.com/rest/' + ZIP_API_KEY + '/radius.json/' \
+            + str(zip) + '/30/mile'
+    results = requests.get(url).content
+    results = results.decode('utf-8').replace("'", '"')
+    data = json.loads(results)['zip_codes']
+    zip_codes = [area['zip_code'] for area in data]
+
+    markets = Market.objects.filter(address_zip__in=zip_codes)
+    template = 'markets/multiple_summaries.html'
+    return render(request, template, {'markets': markets})

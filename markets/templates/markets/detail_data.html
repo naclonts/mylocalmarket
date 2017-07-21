@@ -1,12 +1,10 @@
-{% block content %}
 <div class="market-summary">
     <h3 class="market-name"><a href="{{request.path}}">{{market.name}}</a></h3>
     <div>
-        <a class="market-address" href="{{market.MapsLink}}">
+        <a class="market-address" href="{{market.maps_link}}">
             <p>{{market.address_street}}, {{market.address_city}}</p>
             <p>{{market.address_state}}, {{market.address_zip}}</p>
         </a>
         <a href="{{market.website}}" title="Market Website"><p>Website</p></a>
     </div>
 </div>
-{% endblock %}

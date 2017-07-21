@@ -287,7 +287,7 @@ body {
     max-width: 15em;
 }
 
-.market-summary a, a:visited {
+.market-summary a:link, a:visited {
     margin: 0;
     color: #444;
 }

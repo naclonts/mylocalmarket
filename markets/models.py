@@ -5,6 +5,7 @@ import urllib.parse
 class Market(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=500, null=True)
+    website = models.CharField(max_length=2000, null=True)
     address_street = models.CharField(max_length=500, null=True)
     address_city = models.CharField(max_length=500, null=True)
     address_county = models.CharField(max_length=500, null=True)
@@ -16,7 +17,7 @@ class Market(models.Model):
     def __str__(self):
         return self.name
 
-    def mapsLink(self):
+    def maps_link(self):
         args = '{0},{1} ("{2}")'
         args = args.format(self.latitude, self.longitude, self.name)
         args = urllib.parse.quote(args, '()')
