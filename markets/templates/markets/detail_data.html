@@ -1,0 +1,12 @@
+<div class="market-summary">
+    <h3 class="market-name"><a href="{% url 'market_detail' market.id %}">{{market.name}}</a></h3>
+    <div>
+        <a class="market-address" href="{{market.maps_link}}">
+            <p>{{market.address_street}}, {{market.address_city}}</p>
+            <p>{{market.address_state}}, {{market.address_zip}}</p>
+        </a>
+        {% if market.website != None %}
+            <a href="{{market.website}}" title="Market Website"><p>Website</p></a>
+        {% endif %}
+    </div>
+</div>
