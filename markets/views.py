@@ -2,7 +2,6 @@ from django.forms.models import model_to_dict
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.base import TemplateView
 
-from . import api
 from .models import Market
 
 def index(request):
@@ -40,14 +39,7 @@ def market_detail(request, market_id):
     """
     Detailed view of a single market.
     """
-    try:
-        market = Market.objects.get(id=market_id)
-    except Market.DoesNotExist:
-        print('making a market!')
-        market = Market(id=market_id)
-
-    # Refresh & save updated data
-    market.save()
+    market = get_object_or_404(Market, id=market_id)
 
     if request.is_ajax():
         template = "markets/detail_data.html"
