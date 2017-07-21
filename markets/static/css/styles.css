@@ -22,10 +22,13 @@
 .market-header .-container {
     height: 100%;
     width: 100%;
+    max-width: 960px;
     padding: 0 15px;
+    margin: 0 auto;
     position: relative;
     display: flex;
     flex-flow: row nowrap;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -82,17 +85,27 @@
 
 
 /* Search form */
+/* Class activated when search input is selected. Expand the input over menu items. */
+.market-header.searchbar-selected .navigation  {
+    display: none;
+}
+.market-header.searchbar-selected .searchbar {
+    max-width: 80%;
+}
+.market-header.searchbar-selected .searchbar .btn {
+    opacity: 1;
+    z-index: 0;
+}
+
 .market-header .searchbar {
     padding-left: 12px;
     flex: 1;
     max-width: 30%;
     position: relative;
-    margin-left: auto;
+    margin-right: auto;
     transition: all 600ms cubic-bezier(.165, .84, .44, 1);
 }
-.market-header .searchbar.selected {
-    max-width: 100%;
-}
+
 
 .market-header .searchbar>.svg-icon {
     position: absolute;
@@ -125,10 +138,7 @@
     z-index: -1;
     transition: all .35s cubic-bezier(.165, .84, .44, 1);
 }
-.market-header .searchbar .btn.active-input {
-    opacity: 1;
-    z-index: 0;
-}
+
 
 .f-input {
     box-sizing: border-box;

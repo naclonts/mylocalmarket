@@ -210,12 +210,10 @@ function init() {
 
     // Show button on searchbox click
     $('#search-value').click(e => {
-        $('#submit-search').addClass('active-input');
-        $('#search').addClass('selected');
+        $('.market-header').addClass('searchbar-selected');
         $(document).click(e => {
             if (!$(e.target).is('input')) {
-                $('#search').removeClass('selected');
-                $('#submit-search').removeClass('active-input');
+                $('.market-header').removeClass('searchbar-selected');
             }
         });
     });
