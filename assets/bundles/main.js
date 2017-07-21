@@ -72,25 +72,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__market_data_js__ = __webpack_require__(1);
 
 
-function makeSummaries(markets, parent, numberToAdd) {
-    let i = markets.lastDisplayed;
-    let added = 0;
-    while (added < numberToAdd && i < markets.data.length) {
-        const market = markets.data[i];
-        i++;
-        // skip filtered out markets
-        if (market['filters'] > 0) continue;
-        addSummary(market, parent);
-        added++; // increment number added so far
-    }
-    markets.lastDisplayed = i;
-
-    // Display button to get more results
-    if (markets.hasMore()) {
-        $('#more-results').addClass('visible');
-    } else {
-        $('#more-results').removeClass('visible');
-    }
+// Todo: implement numberToAdd
+function summaries(zip, numberToAdd) {
+    return __WEBPACK_IMPORTED_MODULE_0__market_data_js__["a" /* local */](zip);
 }
 
 function clearSummaries(markets, parent) {
@@ -99,23 +83,10 @@ function clearSummaries(markets, parent) {
 }
 
 function addSummary(market, parent) {
-    const summary = $('<div/>').addClass('market-summary');
-
-    // Create header for element
-    let name = $('<h3/>').addClass('market-name');
-    let link = $('<a/>').attr('href', market['Website'] || "#").text(market['MarketName']);
-    name.append(link);
-
-    // make address linking to maps
-    const address = document.createElement('p');
-    const mapLink = __WEBPACK_IMPORTED_MODULE_0__market_data_js__["c" /* mapsLink */](market);
-    const text = __WEBPACK_IMPORTED_MODULE_0__market_data_js__["a" /* address */](market);
-    address.innerHTML = '<a href=' + mapLink + '>' + text + '</a>';
-
-    // update DOM
-    summary.append(name);
-    summary.append(address);
-    parent.append(summary);
+    __WEBPACK_IMPORTED_MODULE_0__market_data_js__["b" /* marketSummary */](market).then(data => {
+        const summary = $(data);
+        parent.append(summary);
+    });
 }
 
 function addError(err, parent, message = "Looks like there was an error with this request.") {
@@ -174,7 +145,7 @@ function tagPress(tag, allMarkets) {
 // @on {Bool} turn filter on (true) or off (false)
 function toggleFilter(markets, tag, on) {
     markets.data.map(market => {
-        // if this market doesn't include tag, add (or remove) filter
+        // if this market doesn't include tag, add (or remove) a layer of filter
         if (market[tag] != 'Y') {
             market['filters'] += on ? 1 : -1;
         }
@@ -199,50 +170,28 @@ function clearFilters(markets) {
 }
 
 function init() {
-    // Market data singleton
-    const markets = {
-        data: [],
-        lastDisplayed: 0,
-        filters: [],
-        // hasMore: true if there are more markets to display
-        hasMore: function () {
-            // can't use arrow function due to 'this' binding
-            return this.data != undefined && this.lastDisplayed < this.data.length;
-        },
-        redraw: function () {
-            clearSummaries(this, $('#summary-wrapper'));
-            makeSummaries(this, $('#summary-wrapper'), 9);
-        },
-        update: function (data) {
-            this.data = data;
-            this.data.map(market => {
-                market['filters'] = 0;
-            });
-        }
-    };
+    // Show button on searchbox click
+    $('#search-value').click(e => {
+        $('.market-header').addClass('searchbar-selected');
+        $(document).click(e => {
+            if (!$(e.target).is('input')) {
+                $('.market-header').removeClass('searchbar-selected');
+            }
+        });
+    });
 
     // Listen for zip code search
     $('#submit-search').click(e => {
+        // prevent form submission
+        e.preventDefault();
+
         // clear old results
         $('.market-summary-wrapper').empty();
-        markets.data = {};
-        markets.lastDisplayed = 0;
 
-        // generate new results
-        __WEBPACK_IMPORTED_MODULE_0__market_data_js__["b" /* local */]($('#zipcode').val()).then(data => {
-            markets.update(data);
-
-            // Display market data
-            makeSummaries(markets, $('#summary-wrapper'), 9);
-
-            // Functionality for "more results" button(
-            $('#more-results').click(e => {
-                makeSummaries(markets, $('#summary-wrapper'), 9);
-            });
-
-            // Show tags to toggle/filter with
-            makeTags(markets, $('#tag-toggle-wrapper'));
-        }).catch(err => addError(err, $('#summary-wrapper'), "Looks like we weren't able to find anything in zip " + '"' + ($('#zipcode').val() || 'Zip code') + '".'));
+        // load new results
+        summaries($('#search-value').val(), 9).then(html => {
+            $('#summary-wrapper').append($(html));
+        }).catch(err => addError(err, $('#summary-wrapper'), "Looks like we weren't able to find anything in zip " + '"' + ($('#zipcode').val() || 'Zip code') + '".'));;
     });
 }
 
@@ -253,26 +202,29 @@ $(document).ready(init);
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["b"] = local;
+/* harmony export (immutable) */ __webpack_exports__["a"] = local;
 /* unused harmony export detail */
 /* unused harmony export allDetails */
-/* harmony export (immutable) */ __webpack_exports__["c"] = mapsLink;
-/* harmony export (immutable) */ __webpack_exports__["a"] = address;
+/* unused harmony export mapsLink */
+/* unused harmony export address */
+/* unused harmony export marketDetailPage */
+/* harmony export (immutable) */ __webpack_exports__["b"] = marketSummary;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__http_promise__ = __webpack_require__(2);
 //  Wrapper for calls to retreive market data
 
 
-const BASE_URL = 'http://127.0.0.1:5000/yourmarket/api';
+const BASE_API_URL = 'http://127.0.0.1:5000/yourmarket/api/';
+const BASE_SITE_URL = 'http://127.0.0.1:8000/';
 
 // Return summary of markets near zip
 function local(zip, callback) {
-    const url = BASE_URL + '/zip/' + zip;
-    return __WEBPACK_IMPORTED_MODULE_0__http_promise__["a" /* get */](url, 'json');
+    const url = BASE_SITE_URL + 'zip/' + zip;
+    return __WEBPACK_IMPORTED_MODULE_0__http_promise__["a" /* get */](url, 'html');
 }
 
 // get detailed information for a certain market ID
 function detail(id) {
-    const url = BASE_URL + '/id/' + id;
+    const url = BASE_API_URL + 'id/' + id;
     return __WEBPACK_IMPORTED_MODULE_0__http_promise__["a" /* get */](url, 'json');
 }
 
@@ -294,6 +246,18 @@ function mapsLink(market) {
 function address(market) {
     const address = [market['street'], market['city'], market['zip']].join(', ');
     return address;
+}
+
+// internal page about a given market
+function marketDetailPage(market) {
+    let url = BASE_SITE_URL + 'market/' + market['FMID'];
+    let link = $('<a/>').attr('href', url).text(market['MarketName']);
+    return link;
+}
+
+function marketSummary(market) {
+    let url = BASE_SITE_URL + 'market/' + market['FMID'];
+    return __WEBPACK_IMPORTED_MODULE_0__http_promise__["a" /* get */](url, 'html');
 }
 
 /***/ }),

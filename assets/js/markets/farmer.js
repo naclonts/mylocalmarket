@@ -1,25 +1,8 @@
 import * as api from './market-data.js';
 
-
-function makeSummaries(markets, parent, numberToAdd) {
-    let i = markets.lastDisplayed;
-    let added = 0;
-    while (added < numberToAdd && i < markets.data.length) {
-        const market = markets.data[i];
-        i++;
-        // skip filtered out markets
-        if (market['filters'] > 0) continue;
-        addSummary(market, parent);
-        added++; // increment number added so far
-    }
-    markets.lastDisplayed = i;
-
-    // Display button to get more results
-    if (markets.hasMore()) {
-        $('#more-results').addClass('visible');
-    } else {
-        $('#more-results').removeClass('visible');
-    }
+// Todo: implement numberToAdd
+function summaries(zip, numberToAdd) {
+    return api.local(zip);
 }
 
 function clearSummaries(markets, parent) {
@@ -28,24 +11,10 @@ function clearSummaries(markets, parent) {
 }
 
 function addSummary(market, parent) {
-    const summary = $('<div/>').addClass('market-summary');
-
-    // Create header for element
-    let name = $('<h3/>').addClass('market-name');
-    let link = $('<a/>').attr('href', market['Website'] || "#")
-                        .text(market['MarketName']);
-    name.append(link);
-
-    // make address linking to maps
-    const address = document.createElement('p');
-    const mapLink = api.mapsLink(market);
-    const text = api.address(market);
-    address.innerHTML = '<a href=' + mapLink + '>' + text + '</a>';
-
-    // update DOM
-    summary.append(name);
-    summary.append(address);
-    parent.append(summary);
+    api.marketSummary(market).then((data) => {
+        const summary = $(data);
+        parent.append(summary);
+    });
 }
 
 function addError(err, parent, message="Looks like there was an error with this request.") {
@@ -106,7 +75,7 @@ function tagPress(tag, allMarkets) {
 // @on {Bool} turn filter on (true) or off (false)
 function toggleFilter(markets, tag, on) {
     markets.data.map((market) => {
-        // if this market doesn't include tag, add (or remove) filter
+        // if this market doesn't include tag, add (or remove) a layer of filter
         if (market[tag] != 'Y') {
             market['filters'] += on ? 1 : -1;
         }
@@ -132,55 +101,33 @@ function clearFilters(markets) {
 
 
 function init() {
-    // Market data singleton
-    const markets = {
-        data: [],
-        lastDisplayed: 0,
-        filters: [],
-        // hasMore: true if there are more markets to display
-        hasMore: function () { // can't use arrow function due to 'this' binding
-            return (this.data != undefined && this.lastDisplayed < this.data.length);
-        },
-        redraw: function() {
-            clearSummaries(this, $('#summary-wrapper'));
-            makeSummaries(this, $('#summary-wrapper'), 9);
-        },
-        update: function(data) {
-            this.data = data;
-            this.data.map((market) => {
-                market['filters'] = 0;
-            });
-        }
-    };
+    // Show button on searchbox click
+    $('#search-value').click((e) => {
+        $('.market-header').addClass('searchbar-selected');
+        $(document).click((e) => {
+            if (!$(e.target).is('input')) {
+                $('.market-header').removeClass('searchbar-selected');
+            }
+        });
+    });
 
     // Listen for zip code search
     $('#submit-search').click((e) => {
+        // prevent form submission
+        e.preventDefault();
+
         // clear old results
         $('.market-summary-wrapper').empty();
-        markets.data = {};
-        markets.lastDisplayed = 0;
-
-        // generate new results
-        api.local($('#zipcode').val())
-            .then((data) => {
-                markets.update(data);
-
-                // Display market data
-                makeSummaries(markets, $('#summary-wrapper'), 9);
-
-                // Functionality for "more results" button(
-                $('#more-results').click((e) => {
-                    makeSummaries(markets, $('#summary-wrapper'), 9);
-                });
-
-                // Show tags to toggle/filter with
-                makeTags(markets, $('#tag-toggle-wrapper'));
-            })
-            .catch((err) => addError(err,
-                                    $('#summary-wrapper'),
-                                    "Looks like we weren't able to find anything in zip " +
-                                        '"' + ($('#zipcode').val() || 'Zip code') + '".'));
-    });
+        
+        // load new results
+        summaries($('#search-value').val(), 9).then((html) => {
+            $('#summary-wrapper').append($(html));
+        })
+        .catch((err) => addError(err,
+                                $('#summary-wrapper'),
+                                "Looks like we weren't able to find anything in zip " +
+                                    '"' + ($('#zipcode').val() || 'Zip code') + '".'));;
+    })
 }
 
 $(document).ready(init);
