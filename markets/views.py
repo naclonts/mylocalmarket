@@ -1,3 +1,4 @@
+from django.core.serializers import serialize
 from django.forms.models import model_to_dict
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.base import TemplateView
@@ -26,7 +27,8 @@ def market_detail(request, market_id):
     else:
         template = 'markets/detail.html'
 
-    return render(request, template, {'market': market})
+    data = serialize('json', market)
+    return render(request, template, {'market': market, 'market_json': data})
 
 
 def markets_within_zip(request, zip):
@@ -37,5 +39,6 @@ def markets_within_zip(request, zip):
     zip_codes = [z.zip for z in zip_db.get_zipcodes_around_radius(zip, 20)]
 
     markets = Market.objects.filter(address_zip__in=zip_codes)
+    data = serialize('json', markets)
     template = 'markets/multiple_summaries.html'
-    return render(request, template, {'markets': markets})
+    return render(request, template, {'markets': markets, 'market_json': data})
