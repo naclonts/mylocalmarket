@@ -27,7 +27,8 @@ body {
     z-index: 1000;
 }
 .market-header {
-    border-top: 3px solid hsl(26, 90%, 55%);
+    /*border-top: 3px solid hsl(26, 90%, 55%);*/
+    border-top: 3px solid hsl(185, 70%, 76%);
     height: 60px;
     width: 100%;
     top: 0;
@@ -74,7 +75,7 @@ body {
 }
 
 .market-header .navigation .-item._current .-link {
-    border-bottom: 2px solid hsl(26, 90%, 55%);
+    border-bottom: 2px solid hsl(85, 60%, 50%);
 }
 
 .market-header .-link {
