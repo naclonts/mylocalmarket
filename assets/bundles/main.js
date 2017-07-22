@@ -169,17 +169,24 @@ function clearFilters(markets) {
     });
 }
 
-function initMap(coords) {
-    var map = L.map('search-map').setView([coords.lat, coords.lon], 13);
+function initMap() {
+    var map = L.map('search-map');
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
         maxZoom: 18,
         id: 'mapbox.streets',
         accessToken: 'pk.eyJ1Ijoia29rb3BlbGxpIiwiYSI6ImNqNWVydWVtNzBwMDMzM28yY2RybGljanMifQ.xxJlxPb32b4GkiDv-ubL2w'
     }).addTo(map);
+    return map;
+}
+
+function setMapCoords(map, coords, zoom = 12) {
+    map.setView([coords.lat, coords.lon], zoom);
 }
 
 function init() {
+    const map = initMap();
+
     // Show button on searchbox click
     $('#search-value').click(e => {
         $('.market-header').addClass('searchbar-selected');
@@ -192,6 +199,8 @@ function init() {
 
     // Listen for zip code search
     $('#submit-search').click(e => {
+        const zipcode = $('#search-value').val();
+
         // prevent form submission
         e.preventDefault();
 
@@ -199,14 +208,14 @@ function init() {
         $('.market-summary-wrapper').empty();
 
         // load new results
-        summaries($('#search-value').val(), 9).then(html => {
+        summaries(zipcode, 9).then(html => {
             $('#summary-wrapper').append($(html));
         })
         // show an error message if no results come back
-        .catch(err => addError(err, $('#summary-wrapper'), "Looks like we weren't able to find anything in zip " + '"' + ($('#zipcode').val() || 'Zip code') + '".'));
+        .catch(err => addError(err, $('#summary-wrapper'), "Looks like we weren't able to find anything in zip " + '"' + (zipcode || 'Zip code') + '".'));
 
         // set up map
-        __WEBPACK_IMPORTED_MODULE_0__market_data_js__["a" /* latLonFromZip */](80526).then(coords => initMap(coords));
+        __WEBPACK_IMPORTED_MODULE_0__market_data_js__["a" /* latLonFromZip */](zipcode).then(coords => setMapCoords(map, coords));
     });
 
     // simulate initial search
