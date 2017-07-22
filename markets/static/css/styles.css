@@ -271,6 +271,13 @@ button {
 }
 
 
+
+/* Map */
+#search-map {
+    height: 1080px;
+}
+
+
 /* Summary info containers */
 .market-summary-wrapper {
     display: flex;

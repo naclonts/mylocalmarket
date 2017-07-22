@@ -100,6 +100,17 @@ function clearFilters(markets) {
 }
 
 
+function initMap() {
+    var map = L.map('search-map').setView([51.505, -0.09], 13);
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox.streets',
+        accessToken: 'pk.eyJ1Ijoia29rb3BlbGxpIiwiYSI6ImNqNWVydWVtNzBwMDMzM28yY2RybGljanMifQ.xxJlxPb32b4GkiDv-ubL2w'
+    }).addTo(map);
+}
+
+
 function init() {
     // Show button on searchbox click
     $('#search-value').click((e) => {
@@ -130,6 +141,9 @@ function init() {
     });
     $('#search-value').val(80526);
     $('#submit-search').click();
+
+    // set up map
+    initMap();
 }
 
 $(document).ready(init);
