@@ -118,7 +118,7 @@ function init() {
 
         // clear old results
         $('.market-summary-wrapper').empty();
-        
+
         // load new results
         summaries($('#search-value').val(), 9).then((html) => {
             $('#summary-wrapper').append($(html));
@@ -127,7 +127,9 @@ function init() {
                                 $('#summary-wrapper'),
                                 "Looks like we weren't able to find anything in zip " +
                                     '"' + ($('#zipcode').val() || 'Zip code') + '".'));;
-    })
+    });
+    $('#search-value').val(80526);
+    $('#submit-search').click();
 }
 
 $(document).ready(init);

@@ -193,6 +193,8 @@ function init() {
             $('#summary-wrapper').append($(html));
         }).catch(err => addError(err, $('#summary-wrapper'), "Looks like we weren't able to find anything in zip " + '"' + ($('#zipcode').val() || 'Zip code') + '".'));;
     });
+    $('#search-value').val(80526);
+    $('#submit-search').click();
 }
 
 $(document).ready(init);

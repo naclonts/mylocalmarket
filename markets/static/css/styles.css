@@ -1,3 +1,21 @@
+
+body {
+    color: #444;
+    font-family: sans-serif;
+}
+
+
+/* General purpose classes */
+.flex-row {
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.hidden {
+    display: none;
+}
+
+
 /* Header */
 .market-header._fixed {
     position: fixed;
@@ -194,12 +212,7 @@ button {
 }
 
 
-/* Body & content */
-
-body {
-    color: #222;
-    font-family: sans-serif;
-}
+/* xxxcontentxxx */
 
 .__search-wrapper {
     height: 2.5em;
@@ -257,41 +270,53 @@ body {
     color: #888;
 }
 
+
+/* Summary info containers */
 .market-summary-wrapper {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     font-size: 1.2em;
-    min-width: 15em;
+    padding-top: .9375rem;
+    padding-left: .9375rem;
+    padding-right: .9375rem;
+    margin-bottom: .5rem;
+    float: right;
 }
 
-.market-summary {
-
-}
-
-/* Summary info container */
 .market-summary {
     padding: 0 10px;
     margin: 1%;
-    border: 3px solid #666;
+    box-shadow: 0 0 5px 0 rgba(12,13,14,0.4);
     font-family: sans-serif;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
     min-height: 12em;
+    margin-bottom: 2rem;
 }
+
+.market-summary a {
+    color: #2c7ef0;
+}
+
 
 /* Title */
-.market-summary h3, .market-name {
-    font-family: serif;
-    color: #444;
+.market-summary .market-name a {
+    color: hsl(214, 86%, 55%);
+    text-decoration: none;
     max-width: 15em;
 }
+.market-summary .market-name a:focus,
+.market-summary .market-name a:hover {
+    color: hsl(215, 77%, 37%);
+}
 
-.market-summary a:link, a:visited {
+/* Non-title linked elements in market summary */
+.market-summary a {
     margin: 0;
-    color: #444;
+    color: inherit;
 }
 .market-summary a:hover {
     color: #666;
@@ -299,10 +324,4 @@ body {
 
 .market-address {
     text-decoration: none;
-}
-
-
-/* General purpose */
-.hidden {
-    display: none;
 }
