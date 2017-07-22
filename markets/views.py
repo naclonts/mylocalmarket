@@ -27,7 +27,7 @@ def market_detail(request, market_id):
     else:
         template = 'markets/detail.html'
 
-    data = serialize('json', market)
+    data = serialize('json', Market.objects.filter(id=market_id))
     return render(request, template, {'market': market, 'market_json': data})
 
 

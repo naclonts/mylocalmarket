@@ -1,3 +1,5 @@
+require('leaflet.markercluster');
+
 import * as api from './market-data.js';
 
 // Todo: implement numberToAdd
@@ -45,15 +47,23 @@ function setMapCoords(map, coords, zoom=11) {
     map.setView([coords.lat, coords.lon], zoom);
     var m = L.marker([coords.lat, coords.lat]).addTo(map);
 
-    // Update markers
+    // Load farmers market data
     let string = $('#market-data').text();
     let data = JSON.parse(string);
 
+    // Marker clustering handler
+    const markers = L.markerClusterGroup();
+
+    // Create each marker, then add them to the map
     for (let i=0; i < data.length; i++) {
         const market = data[i]['fields'];
-        let m = L.marker([market['latitude'], market['longitude']]).addTo(map);
+        let m = L.marker([market['latitude'], market['longitude']], { title: market['name'] });
         m.bindPopup(market['name']);
+        markers.addLayer(m);
     }
+    map.addLayer(markers);
+
+    // Clear JSON DOM element
     $('#market-data').empty();
 }
 
