@@ -1,40 +1,18 @@
 from django.forms.models import model_to_dict
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.base import TemplateView
+import pyzipcode
 
 from .models import Market
 
-import json, requests
-
 def index(request):
     """
-    index
+    Initial page.
     """
     return render(
         request,
         'index.html',
-        context={'hello_message': 'hello, world!'}
     )
-
-
-class MarketDetailView(TemplateView):
-    """
-    Currently not used.
-    """
-    model = Market
-    template_name = 'markets/detail.html'
-    context_object_name = 'market_detail'
-
-    def get_object(self):
-        print('getting queryset! id %s' % args[0])
-        self.market = Market.objects.get_or_create()
-        return self.market
-
-    # def get_context_data(self, **kwargs):
-    #     print(self.args)
-    #     context = super(MarketDetailView, self).get_context_data(**kwargs)
-    #     context['market'] = self.market
-    #     return context
 
 
 def market_detail(request, market_id):
@@ -51,14 +29,12 @@ def market_detail(request, market_id):
     return render(request, template, {'market': market})
 
 
-ZIP_API_KEY = 'BbWbQdEf2ILFRjyKnbGpLf4V60DSBFrdQnpHB3WEMHjE1Roo35OOlTJrUnkw2LJS'
 def markets_within_zip(request, zip):
-    url = 'https://www.zipcodeapi.com/rest/' + ZIP_API_KEY + '/radius.json/' \
-            + str(zip) + '/30/mile'
-    results = requests.get(url).content
-    results = results.decode('utf-8').replace("'", '"')
-    data = json.loads(results)['zip_codes']
-    zip_codes = [area['zip_code'] for area in data]
+    """
+    Return HTML containing markets within 20 miles of zip.
+    """
+    zip_db = pyzipcode.ZipCodeDatabase()
+    zip_codes = [z.zip for z in zip_db.get_zipcodes_around_radius(zip, 20)]
 
     markets = Market.objects.filter(address_zip__in=zip_codes)
     template = 'markets/multiple_summaries.html'

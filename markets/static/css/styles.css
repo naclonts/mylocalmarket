@@ -278,16 +278,11 @@ button {
     justify-content: center;
     align-items: center;
     font-size: 1.2em;
-    padding-top: .9375rem;
-    padding-left: .9375rem;
-    padding-right: .9375rem;
     margin-bottom: .5rem;
     float: right;
 }
 
 .market-summary {
-    padding: 0 10px;
-    margin: 1%;
     box-shadow: 0 0 5px 0 rgba(12,13,14,0.4);
     font-family: sans-serif;
     display: flex;
@@ -295,6 +290,12 @@ button {
     flex-direction: column;
     min-height: 12em;
     margin-bottom: 2rem;
+    padding-top: .9375rem;
+    padding-left: .9375rem;
+    padding-right: .9375rem;
+    /* 4 per row: */
+    /*width: calc(100% * (1/4) - 10px - 1px);*/
+    width: 100%;
 }
 
 .market-summary a {
