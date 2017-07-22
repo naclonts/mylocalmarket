@@ -74,7 +74,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 // Todo: implement numberToAdd
 function summaries(zip, numberToAdd) {
-    return __WEBPACK_IMPORTED_MODULE_0__market_data_js__["a" /* local */](zip);
+    return __WEBPACK_IMPORTED_MODULE_0__market_data_js__["b" /* local */](zip);
 }
 
 function clearSummaries(markets, parent) {
@@ -83,7 +83,7 @@ function clearSummaries(markets, parent) {
 }
 
 function addSummary(market, parent) {
-    __WEBPACK_IMPORTED_MODULE_0__market_data_js__["b" /* marketSummary */](market).then(data => {
+    __WEBPACK_IMPORTED_MODULE_0__market_data_js__["c" /* marketSummary */](market).then(data => {
         const summary = $(data);
         parent.append(summary);
     });
@@ -169,8 +169,8 @@ function clearFilters(markets) {
     });
 }
 
-function initMap() {
-    var map = L.map('search-map').setView([51.505, -0.09], 13);
+function initMap(coords) {
+    var map = L.map('search-map').setView([coords.lat, coords.lon], 13);
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
         maxZoom: 18,
@@ -201,13 +201,17 @@ function init() {
         // load new results
         summaries($('#search-value').val(), 9).then(html => {
             $('#summary-wrapper').append($(html));
-        }).catch(err => addError(err, $('#summary-wrapper'), "Looks like we weren't able to find anything in zip " + '"' + ($('#zipcode').val() || 'Zip code') + '".'));;
+        })
+        // show an error message if no results come back
+        .catch(err => addError(err, $('#summary-wrapper'), "Looks like we weren't able to find anything in zip " + '"' + ($('#zipcode').val() || 'Zip code') + '".'));
+
+        // set up map
+        __WEBPACK_IMPORTED_MODULE_0__market_data_js__["a" /* latLonFromZip */](80526).then(coords => initMap(coords));
     });
+
+    // simulate initial search
     $('#search-value').val(80526);
     $('#submit-search').click();
-
-    // set up map
-    initMap();
 }
 
 $(document).ready(init);
@@ -217,13 +221,14 @@ $(document).ready(init);
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = local;
+/* harmony export (immutable) */ __webpack_exports__["b"] = local;
 /* unused harmony export detail */
 /* unused harmony export allDetails */
 /* unused harmony export mapsLink */
 /* unused harmony export address */
 /* unused harmony export marketDetailPage */
-/* harmony export (immutable) */ __webpack_exports__["b"] = marketSummary;
+/* harmony export (immutable) */ __webpack_exports__["c"] = marketSummary;
+/* harmony export (immutable) */ __webpack_exports__["a"] = latLonFromZip;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__http_promise__ = __webpack_require__(2);
 //  Wrapper for calls to retreive market data
 
@@ -273,6 +278,15 @@ function marketDetailPage(market) {
 function marketSummary(market) {
     let url = BASE_SITE_URL + 'market/' + market['FMID'];
     return __WEBPACK_IMPORTED_MODULE_0__http_promise__["a" /* get */](url, 'html');
+}
+
+function latLonFromZip(zip) {
+    let url = 'http://maps.googleapis.com/maps/api/geocode/json?address=' + zip;
+    return __WEBPACK_IMPORTED_MODULE_0__http_promise__["a" /* get */](url, 'json').then(data => {
+        let lat = data['results'][0]['geometry']['location']['lat'];
+        let lon = data['results'][0]['geometry']['location']['lng'];
+        return { 'lat': lat, 'lon': lon };
+    });
 }
 
 /***/ }),

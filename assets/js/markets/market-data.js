@@ -50,3 +50,12 @@ export function marketSummary(market) {
     let url = BASE_SITE_URL + 'market/' + market['FMID'];
     return http.get(url, 'html');
 }
+
+export function latLonFromZip(zip) {
+    let url = 'http://maps.googleapis.com/maps/api/geocode/json?address=' + zip;
+    return http.get(url, 'json').then((data) => {
+        let lat = data['results'][0]['geometry']['location']['lat'];
+        let lon = data['results'][0]['geometry']['location']['lng'];
+        return {'lat': lat, 'lon': lon};
+    });
+}

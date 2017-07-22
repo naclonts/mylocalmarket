@@ -100,8 +100,8 @@ function clearFilters(markets) {
 }
 
 
-function initMap() {
-    var map = L.map('search-map').setView([51.505, -0.09], 13);
+function initMap(coords) {
+    var map = L.map('search-map').setView([coords.lat, coords.lon], 13);
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
         maxZoom: 18,
@@ -134,16 +134,19 @@ function init() {
         summaries($('#search-value').val(), 9).then((html) => {
             $('#summary-wrapper').append($(html));
         })
+        // show an error message if no results come back
         .catch((err) => addError(err,
                                 $('#summary-wrapper'),
                                 "Looks like we weren't able to find anything in zip " +
-                                    '"' + ($('#zipcode').val() || 'Zip code') + '".'));;
+                                    '"' + ($('#zipcode').val() || 'Zip code') + '".'));
+
+        // set up map
+        api.latLonFromZip(80526).then((coords) => initMap(coords));
     });
+
+    // simulate initial search
     $('#search-value').val(80526);
     $('#submit-search').click();
-
-    // set up map
-    initMap();
 }
 
 $(document).ready(init);
