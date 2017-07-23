@@ -44,8 +44,18 @@
                     <li class="-item">
                         <a class="-link" href="#">About</a>
                     </li>
+
+                    <!-- User status -->
+                    {% if user.is_authenticated %}
+                        <li class="-item"><a class="-link" href="#">{{user.get_username}}</a></li>
+                        <li class="-item"><a class="-link" href="{% url 'auth:logout' %}?next={{request.path}}">Logout</a></li>
+                    {% else %}
+                        <li class="-item"><a class="-link" href="{% url 'auth:login' %}">Login</a></li>
+                    {% endif %}
                 </ol>
             </nav>
+
+
 
         </div>
     </header>
