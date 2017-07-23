@@ -1,0 +1,43 @@
+{% extends 'markets/base.html' %}
+
+{% block title %}
+<h2>Login</h2>
+{% endblock %}
+
+{% block content %}
+{% if form.errors %}
+<p>
+    Your username and password didn't match. Please give it another go.
+</p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+    <p>
+        Your account doesn't have access to this page. To continue, please login with an account that has access.
+    </p>
+    {% else %}
+    <p>Please login to see this page.</p>
+    {% endif %}
+{% endif %}
+
+<form action="{% url 'auth:login' %}" method="post" class="form">
+    {% csrf_token %}
+    <div>
+        <td>{{ form.username.label_tag }}</td>
+        <td>{{ form.username }}</td>
+    </div>
+    <div>
+        <td>{{ form.password.label_tag }}</td>
+        <td>{{ form.password.label }}</td>
+    </div>
+
+    <div>
+        <input type="submit" value="login" />
+        <input type="hidden" name="next" value="{{ next }}" />
+    </div>
+</form>
+
+<p><a href="#">Lost password?</a></p>
+
+{% endblock %}
