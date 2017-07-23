@@ -9,7 +9,6 @@ body {
 }
 
 
-
 /* General purpose classes */
 .flex-row {
     margin: 0 auto;
@@ -85,7 +84,7 @@ body {
     color: hsl(207, 7%, 35%);
     white-space: nowrap;
     position: relative;
-    padding: 0 8px;
+    padding: 0 16px;
     transition: background-color cubic-bezier(.165, .84, .44, 1) .25s,
                 border-bottom-color ease-in-out .25s;
 }
