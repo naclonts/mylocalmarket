@@ -302,7 +302,7 @@ button {
 
 
 /* Summary info containers */
-.market-summary-wrapper {
+.market-summary-wrapper, .form-wrapper {
     box-sizing: border-box;
     float: right;
     display: flex;
@@ -316,21 +316,24 @@ button {
     width: calc(100% - 600px);
 }
 
-.market-summary {
+.market-summary,
+.flat-box {
     box-shadow: 0 0 5px 0 rgba(12,13,14,0.4);
     font-family: sans-serif;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
     min-height: 12em;
+    margin: 0 auto;
     margin-bottom: 2rem;
     padding-top: .9375rem;
     padding-left: .9375rem;
     padding-right: .9375rem;
     /* 4 per row: */
     /*width: calc(100% * (1/4) - 10px - 1px);*/
-    width: 100%;
+    width: 90%;
 }
+
 
 .market-summary a {
     color: #2c7ef0;
@@ -359,4 +362,74 @@ button {
 
 .market-address {
     text-decoration: none;
+}
+
+
+/* Forms */
+.form {
+    position: relative;
+    margin: 0 auto;
+    padding: 30px;
+    width: 280px;
+    vertical-align: baseline;
+}
+
+.auth-page-container label {
+    font-weight: bold;
+}
+
+.auth-page-container input[type=text],
+.auth-page-container input[type=email],
+.auth-page-container input[type=password] {
+    width: 263px;
+    line-height: 1.3;
+    font-size: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    height: 18px;
+    border: 1px solid hsl(219, 6%, 90%);
+    border-radius: 0;
+    cursor: auto;
+}
+
+.auth-page-container input[type=text]:focus,
+.auth-page-container input[type=email]:focus,
+.auth-page-container input[type=password]:focus,
+.auth-page-container input[type=text]:hover,
+.auth-page-container input[type=email]:hover,
+.auth-page-container input[type=password]:hover {
+    border: 1px solid lightblue;
+    outline: 1px solid lightblue;
+}
+
+.auth-page-container #forgot-pw {
+    position: relative;
+    color: hsl(212, 7%, 65%);
+    font-size: 11px;
+    font-weight: normal;
+    text-decoration: none;
+    text-align: right;
+}
+
+/* log in button */
+.auth-page-container .form input {
+    margin: 5px 0 5px 0;
+    transition: none;
+}
+.auth-page-container .form button.btn {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    text-align: center;
+    background: hsl(205, 100%, 40%);
+    color: #FFF;
+    border-radius: 3px;
+    width: 120px;
+    padding: 12px 40px;
+    box-shadow: none;
+    text-shadow: none;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 0;
 }

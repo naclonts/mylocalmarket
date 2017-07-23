@@ -4,7 +4,9 @@
 <h2>Login</h2>
 {% endblock %}
 
+
 {% block content %}
+<div class="auth-page-container">
 {% if form.errors %}
 <p>
     Your username and password didn't match. Please give it another go.
@@ -21,23 +23,24 @@
     {% endif %}
 {% endif %}
 
-<form action="{% url 'auth:login' %}" method="post" class="form">
+<form action="{% url 'auth:login' %}" method="post" class="form flat-box">
     {% csrf_token %}
     <div>
-        <td>{{ form.username.label_tag }}</td>
+        <td><label>Username</label></td>
         <td>{{ form.username }}</td>
     </div>
     <div>
-        <td>{{ form.password.label_tag }}</td>
-        <td>{{ form.password.label }}</td>
+        <td><label>Password</label></td>
+        <td>{{ form.password }}</td>
     </div>
 
     <div>
-        <input type="submit" value="login" />
+        <button type="submit" class="btn">Log in</button>
         <input type="hidden" name="next" value="{{ next }}" />
     </div>
+
+    <a id="forgot-pw" href="#">Lost password?</a>
 </form>
 
-<p><a href="#">Lost password?</a></p>
-
+</div>
 {% endblock %}
