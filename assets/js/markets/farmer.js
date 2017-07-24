@@ -71,17 +71,6 @@ function setMapCoords(map, coords, zoom=11) {
 
 
 function init() {
-    // Show button on searchbox click
-    $('#search-value').click((e) => {
-        $('.market-header').addClass('searchbar-selected');
-        // remove extended style when user leaves searchbox
-        $(document).focusout((e) => {
-            // if (!$(e.target).is('input')) {
-                $('.market-header').removeClass('searchbar-selected');
-            // }
-        });
-    });
-
     // Listen for zip code search
     $('#submit-search').click((e) => {
         const zipcode = $('#search-value').val();

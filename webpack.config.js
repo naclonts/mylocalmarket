@@ -5,7 +5,10 @@ var BundleTracker = require('webpack-bundle-tracker');
 module.exports = {
     context: __dirname,
 
-    entry: './assets/js/markets/farmer.js',
+    entry: {
+        farmer: './assets/js/markets/farmer.js',
+        interactions: './assets/js/markets/interactions.js',
+    },
 
     output: {
         path: path.resolve('./assets/bundles/'),
@@ -22,9 +25,6 @@ module.exports = {
                 test: /\.js$/,
                 loader: 'babel-loader',
                 exclude: /node_modules/,
-                // query: {
-                //     presets: ['es2015']
-                // }
             },
         ],
     },
