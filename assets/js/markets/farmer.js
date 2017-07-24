@@ -74,10 +74,11 @@ function init() {
     // Show button on searchbox click
     $('#search-value').click((e) => {
         $('.market-header').addClass('searchbar-selected');
-        $(document).click((e) => {
-            if (!$(e.target).is('input')) {
+        // remove extended style when user leaves searchbox
+        $(document).focusout((e) => {
+            // if (!$(e.target).is('input')) {
                 $('.market-header').removeClass('searchbar-selected');
-            }
+            // }
         });
     });
 
@@ -107,7 +108,6 @@ function init() {
     });
 
     // simulate initial search
-    // $('#search-value').val(80526);
     $('#submit-search').click();
 
     const map = initMap();
