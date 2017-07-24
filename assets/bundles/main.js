@@ -154,7 +154,8 @@ function init() {
     $('#submit-search').click(e => {
         const zipcode = $('#search-value').val();
 
-        // prevent form submission
+        // prevent form submission and full-page reload
+        // to give the "single-page app" feel
         e.preventDefault();
 
         // clear old results
@@ -172,7 +173,7 @@ function init() {
     });
 
     // simulate initial search
-    $('#search-value').val(80526);
+    // $('#search-value').val(80526);
     $('#submit-search').click();
 
     const map = initMap();

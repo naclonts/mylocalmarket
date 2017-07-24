@@ -12,17 +12,20 @@ def search_page(request, zip='80526'):
     """
     Initial page.
     """
-    # If this is a POST from the search bar, redirect to new zip search
+    # If this is a POST from the search bar, set zip to search value
     if request.method == 'POST':
+        print(request.POST.get('search_value', ''))
         form = SearchForm(request.POST)
         if form.is_valid():
-            return HttpResponseRedirect('/search//' + str(zip))
+            zip = form.cleaned_data['search_value']
+        else:
+            print(form.errors)
 
-    # if this is just a GET, return page
+    #if this is just a GET, return page
     return render(
         request,
         'markets/index.html',
-        {'search_query': zip},
+        context={'search_value': zip},
     )
 
 
