@@ -1,11 +1,15 @@
+# Django imports
+from django.contrib.auth import login, authenticate
 from django.core.serializers import serialize
 from django.forms.models import model_to_dict
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.base import TemplateView
-import pyzipcode
 
-from .forms import SearchForm
+# Nearby ZIP code lookups
+from pyzipcode import ZipCodeDatabase
+
+from .forms import SearchForm, SignUpForm
 from .models import Market
 
 def search_page(request, zip='80526'):
@@ -14,7 +18,6 @@ def search_page(request, zip='80526'):
     """
     # If this is a POST from the search bar, set zip to search value
     if request.method == 'POST':
-        print(request.POST.get('search_value', ''))
         form = SearchForm(request.POST)
         if form.is_valid():
             zip = form.cleaned_data['search_value']
@@ -48,10 +51,24 @@ def markets_within_zip(request, zip):
     """
     Return HTML containing markets within 20 miles of zip.
     """
-    zip_db = pyzipcode.ZipCodeDatabase()
+    zip_db = ZipCodeDatabase()
     zip_codes = [z.zip for z in zip_db.get_zipcodes_around_radius(zip, 20)]
 
     markets = Market.objects.filter(address_zip__in=zip_codes)
     data = serialize('json', markets)
     template = 'markets/multiple_summaries.html'
     return render(request, template, {'markets': markets, 'market_json': data})
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('markets:search_page')
+    else:
+        form = SignUpForm()
+    return render(request, 'signup.html', {'form': form})

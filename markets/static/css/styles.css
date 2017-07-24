@@ -323,6 +323,7 @@ button {
 .flat-box {
     box-shadow: 0 0 5px 0 rgba(12,13,14,0.4);
     font-family: sans-serif;
+    position: relative;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
@@ -335,6 +336,7 @@ button {
     /* 4 per row: */
     /*width: calc(100% * (1/4) - 10px - 1px);*/
     width: 90%;
+    max-width: 560px;
 }
 
 .market-summary a {
@@ -372,8 +374,8 @@ button {
 
 /* Forms */
 .form {
-    position: relative;
     margin: 0 auto;
+    margin-bottom: 30px;
     padding: 30px;
     width: 280px;
     vertical-align: baseline;
