@@ -20,17 +20,6 @@
         <div class="-container">
             <a class="logo -link" href="{% url 'markets:search_page' %}">My Local Market</a>
 
-            {% comment %}
-            <form id="search" action="{% url 'markets:search_page' %}" method="get" accept-charset="utf-8">
-                <button type="submit" class="btn js-search-submit">
-                    <i class="fa fa-search"></i>
-                </button>
-                <input id="search-value" type="text" placeholder="Search..." value tabindex="1" autocomplete="off" maxlength="240"
-                        class="f-input js-search-field"></input>
-            </form>
-            {% endcomment %}
-
-
             <form id="search" action="{% url 'markets:search_page' %}" method="post" class="searchbar" autocomplete="off" role="search">
                 {% csrf_token %}
 
@@ -52,22 +41,31 @@
 
             <nav class="navigation" role="navigation" aria-label="site navigation">
                 <ol class="-list">
-                    <li class="-item _current">
-                        <a class="-link" href="#">Farmer's Markets</a>
+                    <li class="-item {%block menu_search%}{%endblock%}">
+                        <a class="-link" href="{% url 'markets:search_page' %}">Farmer's Markets</a>
                     </li>
-                    <li class="-item">
+                    <li class="-item {%block menu_favorites%}{%endblock%}">
                         <a class="-link" href="#">Favorites</a>
                     </li>
-                    <li class="-item">
+                    <li class="-item {%block menu_about%}{%endblock%}">
                         <a class="-link" href="#">About</a>
                     </li>
 
                     <!-- User status -->
                     {% if user.is_authenticated %}
-                        <li class="-item"><a class="-link" href="#">{{user.get_username}}</a></li>
-                        <li class="-item"><a class="-link" href="{% url 'logout' %}?next={{request.path}}">Logout</a></li>
+                        <li class="-item {%block menu_profile%}{%endblock%}">
+                            <a class="-link" href="#">{{user.get_username}}</a>
+                        </li>
+                        <li class="-item {%block menu_logout%}{%endblock%}">
+                            <a class="-link" href="{% url 'logout' %}?next={{request.path}}">Logout</a>
+                        </li>
                     {% else %}
-                        <li class="-item"><a class="-link" href="{% url 'login' %}">Login</a></li>
+                        <li class="-item {%block menu_login%}{%endblock%}">
+                            <a class="-link" href="{% url 'login' %}">Login</a>
+                        </li>
+                        <li class="-item {%block menu_signup%}{%endblock%}">
+                            <a class="-link" href="{% url 'markets:signup' %}">Sign Up</a>
+                        </li>
                     {% endif %}
                 </ol>
             </nav>
