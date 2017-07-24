@@ -1,18 +1,28 @@
 from django.core.serializers import serialize
 from django.forms.models import model_to_dict
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.base import TemplateView
 import pyzipcode
 
+from .forms import SearchForm
 from .models import Market
 
-def index(request):
+def search_page(request, zip='80526'):
     """
     Initial page.
     """
+    # If this is a POST from the search bar, redirect to new zip search
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            return HttpResponseRedirect('/search//' + str(zip))
+
+    # if this is just a GET, return page
     return render(
         request,
         'markets/index.html',
+        {'search_query': zip},
     )
 
 
