@@ -18,6 +18,17 @@
         <div class="-container">
             <a class="logo -link" href="{% url 'markets:home' %}">My Local Market</a>
 
+            {% comment %}
+            <form id="search" action="{% url 'search' %}" method="get" accept-charset="utf-8">
+                <button type="submit" class="btn js-search-submit">
+                    <i class="fa fa-search"></i>
+                </button>
+                <input id="search-value" type="text" placeholder="Search..." value tabindex="1" autocomplete="off" maxlength="240"
+                        class="f-input js-search-field"></input>
+            </form>
+            {% endcomment %}
+
+
             <form id="search" action="{% url 'markets:home' %}" method="get" class="searchbar" autocomplete="off" role="search">
                 <svg role="icon" class="svg-icon iconSearch" width="18" height="18" viewBox="0 0 18 18">
                     <path d="M12.864 11.321L18 16.5 16.5 18l-5.178-5.136v-.357a7 7 0 1 1 1.186-1.186h.356zM7 12A5 5 0 1 0 7 2a5 5 0 0 0 0 10z"></path>
@@ -48,9 +59,9 @@
                     <!-- User status -->
                     {% if user.is_authenticated %}
                         <li class="-item"><a class="-link" href="#">{{user.get_username}}</a></li>
-                        <li class="-item"><a class="-link" href="{% url 'auth:logout' %}?next={{request.path}}">Logout</a></li>
+                        <li class="-item"><a class="-link" href="{% url 'logout' %}?next={{request.path}}">Logout</a></li>
                     {% else %}
-                        <li class="-item"><a class="-link" href="{% url 'auth:login' %}">Login</a></li>
+                        <li class="-item"><a class="-link" href="{% url 'login' %}">Login</a></li>
                     {% endif %}
                 </ol>
             </nav>

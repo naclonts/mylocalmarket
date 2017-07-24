@@ -301,18 +301,22 @@ button {
 
 
 /* Summary info containers */
-.market-summary-wrapper, .form-wrapper {
+.market-summary-wrapper, .flat-box-wrapper {
     box-sizing: border-box;
-    float: right;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     font-size: 1.2em;
+    margin: auto;
     margin-bottom: .5rem;
+    padding-top: 1.8rem;
     padding-left: .5rem;
     padding-right: .5rem;
     width: calc(100% - 600px);
+}
+.market-summary-wrapper {
+    float: right;
 }
 
 .market-summary,
@@ -333,7 +337,6 @@ button {
     width: 90%;
 }
 
-
 .market-summary a {
     color: #2c7ef0;
 }
@@ -351,11 +354,14 @@ button {
 }
 
 /* Non-title linked elements in market summary */
-.market-summary a {
+.market-summary a,
+.flat-box a {
     margin: 0;
     color: inherit;
+    text-decoration: none;
 }
-.market-summary a:hover {
+.market-summary a:hover,
+.flat-box a:hover {
     color: #666;
 }
 
@@ -373,13 +379,13 @@ button {
     vertical-align: baseline;
 }
 
-.auth-page-container label {
+label {
     font-weight: bold;
 }
 
-.auth-page-container input[type=text],
-.auth-page-container input[type=email],
-.auth-page-container input[type=password] {
+input[type=text],
+input[type=email],
+input[type=password] {
     width: 263px;
     line-height: 1.3;
     font-size: 100%;
@@ -391,17 +397,17 @@ button {
     cursor: auto;
 }
 
-.auth-page-container input[type=text]:focus,
-.auth-page-container input[type=email]:focus,
-.auth-page-container input[type=password]:focus,
-.auth-page-container input[type=text]:hover,
-.auth-page-container input[type=email]:hover,
-.auth-page-container input[type=password]:hover {
+ input[type=text]:focus,
+ input[type=email]:focus,
+ input[type=password]:focus,
+ input[type=text]:hover,
+ input[type=email]:hover,
+ input[type=password]:hover {
     border: 1px solid lightblue;
     outline: 1px solid lightblue;
 }
 
-.auth-page-container #forgot-pw {
+#forgot-pw {
     position: relative;
     color: hsl(212, 7%, 65%);
     font-size: 11px;
@@ -411,11 +417,11 @@ button {
 }
 
 /* log in button */
-.auth-page-container .form input {
+.form input {
     margin: 5px 0 5px 0;
     transition: none;
 }
-.auth-page-container .form button.btn {
+.form button.btn {
     position: absolute;
     bottom: 30px;
     right: 30px;
@@ -423,7 +429,7 @@ button {
     background: hsl(205, 100%, 40%);
     color: #FFF;
     border-radius: 3px;
-    width: 120px;
+    width: 190px;
     padding: 12px 40px;
     box-shadow: none;
     text-shadow: none;
@@ -431,4 +437,12 @@ button {
     border: none;
     cursor: pointer;
     margin-bottom: 0;
+}
+/*               */
+.form-text {
+    margin-top: 0;
+}
+
+.reset-confirm-form {
+    min-height: 13em;
 }

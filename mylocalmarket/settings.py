@@ -136,3 +136,7 @@ WEBPACK_LOADER = {
 
 # Post-login page
 LOGIN_REDIRECT_URL = '/'
+
+
+# Email test setup
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

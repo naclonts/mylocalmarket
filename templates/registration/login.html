@@ -6,7 +6,7 @@
 
 
 {% block content %}
-<div class="auth-page-container">
+<div class="flat-box-wrapper">
 {% if form.errors %}
 <p>
     Your username and password didn't match. Please give it another go.
@@ -19,11 +19,11 @@
         Your account doesn't have access to this page. To continue, please login with an account that has access.
     </p>
     {% else %}
-    <p>Please login to see this page.</p>
+    <!-- <p>Please login to see this page.</p> -->
     {% endif %}
 {% endif %}
 
-<form action="{% url 'auth:login' %}" method="post" class="form flat-box">
+<form action="{% url 'login' %}" method="post" class="form flat-box">
     {% csrf_token %}
     <div>
         <td><label>Username</label></td>
@@ -39,7 +39,7 @@
         <input type="hidden" name="next" value="{{ next }}" />
     </div>
 
-    <a id="forgot-pw" href="#">Lost password?</a>
+    <a id="forgot-pw" href="{% url 'password_reset' %}">Lost password?</a>
 </form>
 
 </div>
