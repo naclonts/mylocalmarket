@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.contrib.auth.validators import UnicodeUsernameValidator
+from django.utils.translation import ugettext as _
 
 
 class SearchForm(forms.Form):
@@ -8,13 +10,28 @@ class SearchForm(forms.Form):
 
 
 class SignUpForm(UserCreationForm):
-    first_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
-    last_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
-    zip_code = forms.CharField(max_length=5, required=False, help_text='Optional.')
-    email = forms.EmailField(max_length=254, help_text='Valid email address required.')
+    first_name = forms.CharField(max_length=30, required=False, help_text='Optional.',
+                                 widget=forms.TextInput(attrs={'placeholder': 'First name (optional)'}))
+    last_name = forms.CharField(max_length=30, required=False, help_text='Optional.',
+                                widget=forms.TextInput(attrs={'placeholder': 'Last name (optional)'}))
+    # Store email address as username
+    username = forms.CharField(
+        help_text=_('Valid email address is required.'),
+        error_messages={
+            'unique': _("A user with that email address already exists."),
+        },
+        widget=forms.TextInput(attrs={'placeholder': 'Email address'})
+    )
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'zip_code',
+        fields = ('username', 'first_name', 'last_name',
                   'password1', 'password2')
-                  
+
+    def __init__(self, *args, **kwargs):
+        """
+        Set up labels for password fields.
+        """
+        super(SignUpForm, self).__init__(*args, **kwargs)
+        self.fields['password1'].widget.attrs = {'placeholder': 'Password'}
+        self.fields['password2'].widget.attrs = {'placeholder': 'Confirm password'}

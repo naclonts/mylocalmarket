@@ -19,6 +19,10 @@ body {
     display: none;
 }
 
+.message-error {
+    color: hsl(0, 85%, 55%);
+}
+
 
 /* Header */
 .market-header._fixed {
@@ -226,65 +230,6 @@ button {
 }
 
 
-/* xxxcontentxxx */
-
-.__search-wrapper {
-    height: 2.5em;
-    margin: auto;
-    text-align: center;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.big-button {
-    width: 25%;
-    background-color: hsl(250, 90%, 95%);
-    border: 1px solid #bbb;
-}
-.more-results-wrapper {
-    text-align: center;
-}
-#more-results {
-    display: none;
-}
-#more-results.visible {
-    display: inline-block;
-}
-
-
-.tag-toggle-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin: 20px auto;
-}
-
-.tag-toggle {
-    margin: 2px 5px;
-    background-color: hsl(198, 44%, 79%);
-    color: #fafafa;
-    border: 0;
-    border-radius: 10px;
-    transition: 0.2s all;
-}
-.tag-toggle:hover, #clear-filters:hover {
-    background-color: hsl(198, 62%, 71%);
-}
-.tag-toggle.selected {
-    background-color: hsl(198, 62%, 61%);
-}
-
-#clear-filters {
-    background-color: hsl(196, 30%, 29%);
-}
-
-
-.distance {
-    color: #888;
-}
-
-
 
 /* Map */
 .search-map-wrapper {
@@ -313,10 +258,10 @@ button {
     padding-top: 1.8rem;
     padding-left: .5rem;
     padding-right: .5rem;
-    width: calc(100% - 600px);
 }
 .market-summary-wrapper {
     float: right;
+    width: calc(100% - 600px);
 }
 
 .market-summary,
@@ -336,7 +281,7 @@ button {
     /* 4 per row: */
     /*width: calc(100% * (1/4) - 10px - 1px);*/
     width: 90%;
-    max-width: 560px;
+    max-width: 520px;
 }
 
 .market-summary a {

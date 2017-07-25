@@ -10,10 +10,10 @@
         {% csrf_token %}
         {% for field in form %}
             <p>
-                {{ field.label_tag }}<br />
+                <!-- {{ field.label_tag }}<br /> -->
                 {{ field }}
                 {% if field.help_text %}
-                    <div class="message-help">{{ field.help_text }}</div>
+                    <p class="message-help hidden">{{ field.help_text }}</p>
                 {% endif %}
                 {% for error in field.errors %}
                     <p class="message-error">{{ error }}</p>
