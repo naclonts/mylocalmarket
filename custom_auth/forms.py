@@ -1,7 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.contrib.auth.password_validation import validate_password
 
 from custom_auth.models import CustomUser
+
 
 class UserCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the basic fields, as well as
@@ -23,11 +25,12 @@ class UserCreationForm(forms.ModelForm):
         self.fields['last_name'].widget.attrs = {'placeholder': 'Last name (optional)'}
 
     def clean_password2(self):
-        # Check that the two password entries match.
+        # Check that the two password entries match and fit requirements.
         password1 = self.cleaned_data.get('password1')
         password2 = self.cleaned_data.get('password2')
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError("Passwords don't match")
+        validate_password(password2)
         return password2
 
     def save(self, commit=True):
