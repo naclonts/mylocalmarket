@@ -5,12 +5,11 @@
 {% block content %}
 <div class="flat-box-wrapper">
 <div class="flat-box">
-    <h2>Sign up</h2>
+    <h2>Sign Up</h2>
     <form method="POST" class="form">
         {% csrf_token %}
         {% for field in form %}
             <p>
-                <!-- {{ field.label_tag }}<br /> -->
                 {{ field }}
                 {% if field.help_text %}
                     <p class="message-help hidden">{{ field.help_text }}</p>

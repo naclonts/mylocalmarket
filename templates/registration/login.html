@@ -28,7 +28,7 @@
 <form action="{% url 'login' %}" method="post" class="form flat-box">
     {% csrf_token %}
     <div>
-        <td><label>Username</label></td>
+        <td><label>Email</label></td>
         <td>{{ form.username }}</td>
     </div>
     <div>

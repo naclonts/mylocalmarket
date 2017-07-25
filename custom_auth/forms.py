@@ -20,7 +20,7 @@ class UserCreationForm(forms.ModelForm):
         super(UserCreationForm, self).__init__(*args, **kwargs)
         self.fields['email'].widget.attrs = {'placeholder': 'Email address'}
         self.fields['first_name'].widget.attrs = {'placeholder': 'First name (optional)'}
-        self.fields['last_name'].widget.attrs = {'placeholder': 'First name (optional)'}
+        self.fields['last_name'].widget.attrs = {'placeholder': 'Last name (optional)'}
 
     def clean_password2(self):
         # Check that the two password entries match.
