@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'markets.apps.MarketsConfig',
-    # 'custom_auth.apps.CustomAuthConfig',
+    'custom_auth.apps.CustomAuthConfig',
     'webpack_loader',
 ]
 

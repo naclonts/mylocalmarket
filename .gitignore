@@ -1,6 +1,6 @@
 *.pyc
 /node_modules/
 *.sqlite3
-/__pycache__/
+__pycache__
 secret_settings.py
 *.csv#
