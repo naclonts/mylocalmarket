@@ -196,12 +196,16 @@ body {
 .svg-icon {
     vertical-align: bottom;
 }
-svg[Attribute Style] {
+svg.svg-icon[Attribute Style] {
     width: 18;
     height: 18
 }
 svg:not(:root) {
     overflow: hidden;
+}
+
+.svg-inline-wrapper {
+    display: inline-block;
 }
 
 button, .btn {
@@ -278,8 +282,6 @@ button {
     padding-top: .9375rem;
     padding-left: .9375rem;
     padding-right: .9375rem;
-    /* 4 per row: */
-    /*width: calc(100% * (1/4) - 10px - 1px);*/
     width: 90%;
     max-width: 520px;
 }
@@ -290,10 +292,17 @@ button {
 
 
 /* Title */
+.market-summary h3.market-name  {
+    display: flex;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
 .market-summary .market-name a {
     color: hsl(214, 86%, 55%);
     text-decoration: none;
-    max-width: 15em;
+    text-align: left;
+    padding-left: 20px;
+    vertical-align: middle;
 }
 .market-summary .market-name a:focus,
 .market-summary .market-name a:hover {
