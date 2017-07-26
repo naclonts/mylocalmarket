@@ -53,6 +53,7 @@ class CustomUser(AbstractBaseUser):
 
     USERNAME_FIELD = 'email'
 
+
     def get_full_name(self):
         """
         Return first name plus last name, with a space in between.

@@ -1,8 +1,16 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 import urllib.parse
 
-# Create your models here.
+from custom_auth.models import CustomUser
+
+
 class Market(models.Model):
+    """
+    Model to house information about a single farmers market.
+    """
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=500, null=True)
     website = models.CharField(max_length=2000, null=True)
@@ -10,7 +18,7 @@ class Market(models.Model):
     address_city = models.CharField(max_length=500, null=True)
     address_county = models.CharField(max_length=500, null=True)
     address_state = models.CharField(max_length=50, null=True)
-    address_zip = models.CharField(max_length=500, null=True)
+    address_zip = models.CharField(max_length=50, null=True)
     latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True)
 
@@ -23,3 +31,21 @@ class Market(models.Model):
         args = urllib.parse.quote(args, '()')
         url = 'https://maps.google.com/?q=' + args
         return url
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    bio = models.TextField(max_length=1000, blank=True)
+    location = models.CharField(max_length=50, blank=True)
+    address_zip = models.CharField(max_length=50, null=True)
+    favorite_markets = models.ManyToManyField(Market)
+
+    def __str__(self):
+        return self.user.first_name
+
+
+@receiver(post_save, sender=CustomUser)
+def update_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+    instance.profile.save()

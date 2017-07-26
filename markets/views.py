@@ -1,4 +1,5 @@
 # Django imports
+from django import templates
 from django.contrib.auth import login, authenticate
 from django.core.serializers import serialize
 from django.forms.models import model_to_dict
@@ -43,8 +44,14 @@ def market_detail(request, market_id):
     else:
         template = 'markets/detail.html'
 
+    user_favorite = request.user.profile.favorite_markets.filter(id=market_id).exists()
     data = serialize('json', Market.objects.filter(id=market_id))
-    return render(request, template, {'market': market, 'market_json': data})
+    context = {
+        'market': market,
+        'market_json': data,
+        'user_favorite': True
+    }
+    return render(request, template, context=context)
 
 
 def markets_within_zip(request, zip):

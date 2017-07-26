@@ -1,4 +1,13 @@
 <div class="market-summary flex-row">
+    <div class="favorite-icon">
+        {% if user_favorite is True %}
+        Hello!
+        tere
+        {% else %}
+        Goodbye :)
+        {% endif %}
+    </div>
+
     <h3 class="market-name"><a href="{% url 'markets:detail' market.id %}">{{market.name}}</a></h3>
     <div>
         <a class="market-address" href="{{market.maps_link}}">
