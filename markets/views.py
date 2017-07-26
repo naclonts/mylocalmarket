@@ -1,5 +1,4 @@
 # Django imports
-from django import templates
 from django.contrib.auth import login, authenticate
 from django.core.serializers import serialize
 from django.forms.models import model_to_dict

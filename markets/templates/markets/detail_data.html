@@ -1,6 +1,7 @@
+{% load market_extras %}
 <div class="market-summary flex-row">
     <div class="favorite-icon">
-        {% if user_favorite is True %}
+        {% if user|has_favorite:market.id %}
         Hello!
         tere
         {% else %}
