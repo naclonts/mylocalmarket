@@ -68,20 +68,15 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["b"] = local;
+/* harmony export (immutable) */ __webpack_exports__["c"] = local;
 /* unused harmony export detail */
 /* unused harmony export allDetails */
-/* unused harmony export mapsLink */
-/* unused harmony export address */
-/* unused harmony export marketDetailPage */
-/* harmony export (immutable) */ __webpack_exports__["c"] = marketSummary;
-/* harmony export (immutable) */ __webpack_exports__["a"] = latLonFromZip;
-/* harmony export (immutable) */ __webpack_exports__["d"] = toggleFavorite;
+/* harmony export (immutable) */ __webpack_exports__["e"] = toggleFavorite;
+/* harmony export (immutable) */ __webpack_exports__["b"] = latLonFromZip;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__http_promise__ = __webpack_require__(1);
 //  Wrapper for calls to retreive market data
 
 
-const BASE_API_URL = 'http://127.0.0.1:5000/yourmarket/api/';
 const BASE_SITE_URL = 'http://127.0.0.1:8000/';
 
 // Return summary of markets near zip
@@ -92,8 +87,8 @@ function local(zip, callback) {
 
 // get detailed information for a certain market ID
 function detail(id) {
-    const url = BASE_API_URL + 'id/' + id;
-    return __WEBPACK_IMPORTED_MODULE_0__http_promise__["a" /* get */](url, 'json');
+    const url = BASE_SITE_URL + 'market/' + id;
+    return __WEBPACK_IMPORTED_MODULE_0__http_promise__["a" /* get */](url, 'html');
 }
 
 // get detailed information for a group of market summaries
@@ -104,28 +99,10 @@ function allDetails(marketData) {
     }
 }
 
-// Get Google Maps link from market detail data
-function mapsLink(market) {
-    const link = 'https://maps.google.com/?q=' + encodeURI(market['y'] + ',' + market['x'] + ' ("' + market['MarketName'] + '")');
-    return link;
-}
-
-// return address of market
-function address(market) {
-    const address = [market['street'], market['city'], market['zip']].join(', ');
-    return address;
-}
-
-// internal page about a given market
-function marketDetailPage(market) {
-    let url = BASE_SITE_URL + 'market/' + market['FMID'];
-    let link = $('<a/>').attr('href', url).text(market['MarketName']);
-    return link;
-}
-
-function marketSummary(market) {
-    let url = BASE_SITE_URL + 'market/' + market['FMID'];
-    return __WEBPACK_IMPORTED_MODULE_0__http_promise__["a" /* get */](url, 'html');
+// Favorite a particular farmers market
+function toggleFavorite(id) {
+    let url = BASE_SITE_URL + 'favorite/' + id;
+    return __WEBPACK_IMPORTED_MODULE_0__http_promise__["b" /* post */](url);
 }
 
 function latLonFromZip(zip) {
@@ -135,12 +112,6 @@ function latLonFromZip(zip) {
         let lon = data['results'][0]['geometry']['location']['lng'];
         return { 'lat': lat, 'lon': lon };
     });
-}
-
-// Favorite a particular farmers market
-function toggleFavorite(id) {
-    let url = BASE_SITE_URL + 'favorite/' + id;
-    return __WEBPACK_IMPORTED_MODULE_0__http_promise__["b" /* post */](url);
 }
 
 /***/ }),
@@ -233,8 +204,12 @@ function init() {
     // Handle clicks to "favorites" button
     $('.market-summary-wrapper').on('click', '.favorite-wrapper', function (e) {
         let market_id = this.id;
-        __WEBPACK_IMPORTED_MODULE_0__market_api_js__["d" /* toggleFavorite */](market_id).then(() => {
-            console.log('complete!');
+        __WEBPACK_IMPORTED_MODULE_0__market_api_js__["e" /* toggleFavorite */](market_id).then(d => {
+            console.log(market_id);
+            return __WEBPACK_IMPORTED_MODULE_0__market_api_js__["get_svg_favorite_icon"](market_id);
+        }).then(svg_data => {
+            $('#' + market_id + ' svg').empty();
+            $('#' + market_id).append(svg_data);
         }).catch(err => {
             console.log('----error!----');
             console.log(err);

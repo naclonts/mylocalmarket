@@ -14,8 +14,12 @@ function init() {
     // Handle clicks to "favorites" button
     $('.market-summary-wrapper').on('click', '.favorite-wrapper', function(e) {
         let market_id = this.id;
-        api.toggleFavorite(market_id).then(() => {
-            console.log('complete!')
+        api.toggleFavorite(market_id).then((d) => {
+            console.log(market_id);
+            return api.get_svg_favorite_icon(market_id);
+        }).then((svg_data) => {
+            $('#' + market_id + ' svg').empty();
+            $('#' + market_id).append(svg_data);
         })
         .catch((err) => {
             console.log('----error!----');
