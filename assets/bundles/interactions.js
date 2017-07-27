@@ -63,10 +63,162 @@
 /******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
-/******/ ({
+/******/ ([
+/* 0 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-/***/ 4:
-/***/ (function(module, exports) {
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["b"] = local;
+/* unused harmony export detail */
+/* unused harmony export allDetails */
+/* unused harmony export mapsLink */
+/* unused harmony export address */
+/* unused harmony export marketDetailPage */
+/* harmony export (immutable) */ __webpack_exports__["c"] = marketSummary;
+/* harmony export (immutable) */ __webpack_exports__["a"] = latLonFromZip;
+/* harmony export (immutable) */ __webpack_exports__["d"] = toggleFavorite;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__http_promise__ = __webpack_require__(1);
+//  Wrapper for calls to retreive market data
+
+
+const BASE_API_URL = 'http://127.0.0.1:5000/yourmarket/api/';
+const BASE_SITE_URL = 'http://127.0.0.1:8000/';
+
+// Return summary of markets near zip
+function local(zip, callback) {
+    const url = BASE_SITE_URL + 'zip/' + zip;
+    return __WEBPACK_IMPORTED_MODULE_0__http_promise__["a" /* get */](url, 'html');
+}
+
+// get detailed information for a certain market ID
+function detail(id) {
+    const url = BASE_API_URL + 'id/' + id;
+    return __WEBPACK_IMPORTED_MODULE_0__http_promise__["a" /* get */](url, 'json');
+}
+
+// get detailed information for a group of market summaries
+function allDetails(marketData) {
+    for (var i = 0; i < marketData.length; i++) {
+        let market = marketData[i];
+        getDetail(market['id']).then(printData);
+    }
+}
+
+// Get Google Maps link from market detail data
+function mapsLink(market) {
+    const link = 'https://maps.google.com/?q=' + encodeURI(market['y'] + ',' + market['x'] + ' ("' + market['MarketName'] + '")');
+    return link;
+}
+
+// return address of market
+function address(market) {
+    const address = [market['street'], market['city'], market['zip']].join(', ');
+    return address;
+}
+
+// internal page about a given market
+function marketDetailPage(market) {
+    let url = BASE_SITE_URL + 'market/' + market['FMID'];
+    let link = $('<a/>').attr('href', url).text(market['MarketName']);
+    return link;
+}
+
+function marketSummary(market) {
+    let url = BASE_SITE_URL + 'market/' + market['FMID'];
+    return __WEBPACK_IMPORTED_MODULE_0__http_promise__["a" /* get */](url, 'html');
+}
+
+function latLonFromZip(zip) {
+    let url = 'http://maps.googleapis.com/maps/api/geocode/json?address=' + zip;
+    return __WEBPACK_IMPORTED_MODULE_0__http_promise__["a" /* get */](url, 'json').then(data => {
+        let lat = data['results'][0]['geometry']['location']['lat'];
+        let lon = data['results'][0]['geometry']['location']['lng'];
+        return { 'lat': lat, 'lon': lon };
+    });
+}
+
+// Favorite a particular farmers market
+function toggleFavorite(id) {
+    let url = BASE_SITE_URL + 'favorite/' + id;
+    return __WEBPACK_IMPORTED_MODULE_0__http_promise__["b" /* post */](url);
+}
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+// Implementation with jQuery
+const get = function (url, dataType = 'text') {
+    // return new pending promise
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: url,
+            type: 'GET',
+            dataType: dataType,
+            async: true,
+            statusCode: {
+                404: response => reject(new Error('404 error - response: ' + response)),
+                200: response => resolve(response)
+            },
+            error: (jqXHR, status, error) => {
+                reject(new Error('Failed to GET the thing - status ' + status));
+            }
+        });
+    });
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = get;
+
+
+// Implementation with jQuery
+const post = function (url) {
+    const token = getCookie('csrftoken');
+    // return new pending promise
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: url,
+            type: 'POST',
+            headers: { 'X-CSRFToken': token },
+            statusCode: {
+                404: response => reject(new Error('404 error - response: ' + response)),
+                200: response => resolve(response)
+            },
+            error: (jqXHR, status, error) => {
+                reject(new Error('Failed to POST the thing - status ' + status));
+            }
+        });
+    });
+};
+/* harmony export (immutable) */ __webpack_exports__["b"] = post;
+
+
+// Get a cookie. Used to obtain CSRF token.
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === name + '=') {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+/***/ }),
+/* 2 */,
+/* 3 */,
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__market_api_js__ = __webpack_require__(0);
+
 
 function init() {
     // Show button on searchbox click
@@ -77,10 +229,21 @@ function init() {
             $('.market-header').removeClass('searchbar-selected');
         });
     });
+
+    // Handle clicks to "favorites" button
+    $('.market-summary-wrapper').on('click', '.favorite-wrapper', function (e) {
+        let market_id = this.id;
+        __WEBPACK_IMPORTED_MODULE_0__market_api_js__["d" /* toggleFavorite */](market_id).then(() => {
+            console.log('complete!');
+        }).catch(err => {
+            console.log('----error!----');
+            console.log(err);
+        });
+    });
+    console.log('inited');
 }
 
 $(document).ready(init);
 
 /***/ })
-
-/******/ });
+/******/ ]);

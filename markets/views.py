@@ -2,8 +2,9 @@
 from django.contrib.auth import login, authenticate
 from django.core.serializers import serialize
 from django.forms.models import model_to_dict
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.generic.base import TemplateView
 
 # Nearby ZIP code lookups
@@ -52,7 +53,7 @@ def market_detail(request, market_id):
     }
     return render(request, template, context=context)
 
-
+@ensure_csrf_cookie
 def markets_within_zip(request, zip):
     """
     Return HTML containing markets within 20 miles of zip.
@@ -78,3 +79,23 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
+
+
+@ensure_csrf_cookie
+def toggle_favorite(request, market_id):
+    """
+    Set a farmers market to be one of the user's favorites, or remove if already
+    a favorite.
+    """
+    if request.method == 'POST':
+        profile = request.user.profile
+        market = get_object_or_404(Market, id=market_id)
+
+        if profile.favorite_markets.filter(id=market_id).exists():
+            profile.favorite_markets.remove(market)
+            response_text = 'Market added to favorites.'
+        else:
+            profile.favorite_markets.add(market)
+            response_text = 'Market removed from favorites.'
+
+        return HttpResponse(response_text, status=200)

@@ -59,3 +59,10 @@ export function latLonFromZip(zip) {
         return {'lat': lat, 'lon': lon};
     });
 }
+
+
+// Favorite a particular farmers market
+export function toggleFavorite(id) {
+    let url = BASE_SITE_URL + 'favorite/' + id;
+    return http.post(url);
+}

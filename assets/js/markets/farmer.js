@@ -1,6 +1,6 @@
 require('leaflet.markercluster');
 
-import * as api from './market-data.js';
+import * as api from './market-api.js';
 
 const SITE_BASE_URL = '127.0.0.1:8000';
 
@@ -31,7 +31,6 @@ function addError(err, parent, message="Looks like there was an error with this 
 
     parent.append(summary);
 }
-
 
 
 function initMap() {
@@ -76,7 +75,7 @@ function init() {
         const zipcode = $('#search-value').val();
 
         // prevent form submission and full-page reload
-        // to give the "single-page app" feel
+        // to give that "single-page app" feel
         e.preventDefault();
 
         // clear old results

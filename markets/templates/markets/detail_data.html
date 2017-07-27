@@ -1,11 +1,13 @@
 {% load market_extras %}
 <div class="market-summary flex-row">
     <h3 class="market-name">
+        <span class="favorite-wrapper" id="{{market.id}}">
         {% if user|has_favorite:market.id %}
             {% include 'markets/corn_favorite.svg.html' %}
         {% else %}
             {% include 'markets/corn_not_favorite.svg.html' %}
         {% endif %}
+        </span>
         <a href="{% url 'markets:detail' market.id %}">{{market.name}}</a>
     </h3>
 
