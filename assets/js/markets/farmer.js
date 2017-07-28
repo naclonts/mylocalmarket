@@ -14,13 +14,6 @@ function clearSummaries(markets, parent) {
     markets.lastDisplayed = 0;
 }
 
-function addSummary(market, parent) {
-    api.marketSummary(market).then((data) => {
-        const summary = $(data);
-        parent.append(summary);
-    });
-}
-
 function addError(err, parent, message="Looks like there was an error with this request.") {
     console.log(err);
     const summary = $('<div/>').addClass('market-summary');

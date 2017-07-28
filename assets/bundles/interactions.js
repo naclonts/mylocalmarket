@@ -68,11 +68,11 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["c"] = local;
+/* harmony export (immutable) */ __webpack_exports__["b"] = local;
 /* unused harmony export detail */
 /* unused harmony export allDetails */
-/* harmony export (immutable) */ __webpack_exports__["e"] = toggleFavorite;
-/* harmony export (immutable) */ __webpack_exports__["b"] = latLonFromZip;
+/* harmony export (immutable) */ __webpack_exports__["c"] = toggleFavorite;
+/* harmony export (immutable) */ __webpack_exports__["a"] = latLonFromZip;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__http_promise__ = __webpack_require__(1);
 //  Wrapper for calls to retreive market data
 
@@ -202,20 +202,16 @@ function init() {
     });
 
     // Handle clicks to "favorites" button
-    $('.market-summary-wrapper').on('click', '.favorite-wrapper', function (e) {
+    $('.market-summary-wrapper').on('click', '.favorite', function (e) {
         let market_id = this.id;
-        __WEBPACK_IMPORTED_MODULE_0__market_api_js__["e" /* toggleFavorite */](market_id).then(d => {
+        __WEBPACK_IMPORTED_MODULE_0__market_api_js__["c" /* toggleFavorite */](market_id).then(() => {
             console.log(market_id);
-            return __WEBPACK_IMPORTED_MODULE_0__market_api_js__["get_svg_favorite_icon"](market_id);
-        }).then(svg_data => {
-            $('#' + market_id + ' svg').empty();
-            $('#' + market_id).append(svg_data);
+            $('#' + market_id).toggleClass('favored');
         }).catch(err => {
-            console.log('----error!----');
+            alert('Oops! An error occurred when trying to favorite the market with the id ' + market_id);
             console.log(err);
         });
     });
-    console.log('inited');
 }
 
 $(document).ready(init);

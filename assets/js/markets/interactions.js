@@ -12,21 +12,16 @@ function init() {
     });
 
     // Handle clicks to "favorites" button
-    $('.market-summary-wrapper').on('click', '.favorite-wrapper', function(e) {
+    $('.market-summary-wrapper').on('click', '.favorite', function(e) {
         let market_id = this.id;
-        api.toggleFavorite(market_id).then((d) => {
+        api.toggleFavorite(market_id).then(() => {
             console.log(market_id);
-            return api.get_svg_favorite_icon(market_id);
-        }).then((svg_data) => {
-            $('#' + market_id + ' svg').empty();
-            $('#' + market_id).append(svg_data);
-        })
-        .catch((err) => {
-            console.log('----error!----');
+            $('#' + market_id).toggleClass('favored');
+        }).catch((err) => {
+            alert('Oops! An error occurred when trying to favorite the market with the id ' + market_id);
             console.log(err);
         });
     });
-    console.log('inited');
 }
 
 $(document).ready(init);

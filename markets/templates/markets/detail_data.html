@@ -1,23 +1,21 @@
 {% load market_extras %}
 <div class="market-summary flex-row">
-    <h3 class="market-name">
-        <span class="favorite-wrapper" id="{{market.id}}">
-        {% if user|has_favorite:market.id %}
-            {% include 'markets/corn_favorite.svg.html' %}
-        {% else %}
-            {% include 'markets/corn_not_favorite.svg.html' %}
-        {% endif %}
-        </span>
-        <a href="{% url 'markets:detail' market.id %}">{{market.name}}</a>
-    </h3>
+    <span class="favorite{% if user|has_favorite:market.id %} favored{% endif %}" id="{{market.id}}">
+        {% include 'markets/corn_favorite_simple.svg' %}
+    </span>
+    <div class="content-wrapper">
+        <h3 class="market-name">
+            <a href="{% url 'markets:detail' market.id %}">{{market.name}}</a>
+        </h3>
 
-    <div>
-        <a class="market-address" href="{{market.maps_link}}">
-            <p>{{market.address_street}}, {{market.address_city}}</p>
-            <p>{{market.address_state}}, {{market.address_zip}}</p>
-        </a>
-        {% if market.website != None %}
-            <a href="{{market.website}}" title="Market Website"><p>Website</p></a>
-        {% endif %}
+        <div>
+            <a class="market-address" href="{{market.maps_link}}">
+                <p>{{market.address_street}}, {{market.address_city}}</p>
+                <p>{{market.address_state}}, {{market.address_zip}}</p>
+            </a>
+            {% if market.website != None %}
+                <a href="{{market.website}}" title="Market Website"><p>Website</p></a>
+            {% endif %}
+        </div>
     </div>
 </div>

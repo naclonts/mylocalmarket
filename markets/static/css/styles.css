@@ -208,6 +208,31 @@ svg:not(:root) {
     display: inline-block;
 }
 
+.favorite {
+    width: 40px;
+}
+
+.favorite svg .svg-corn-cob {
+    fill: #fff;
+}
+.favorite svg .svg-corn-wrap-inner {
+    fill: #ddd;
+}
+.favorite svg .svg-corn-wrap-outer {
+    fill: #999;
+}
+
+.favorite.favored svg .svg-corn-cob {
+    fill: hsl(58, 100%, 50%);
+}
+.favorite.favored svg .svg-corn-wrap-inner {
+    fill: hsl(92, 80%, 53%);
+}
+.favorite.favored svg .svg-corn-wrap-outer {
+    fill: hsl(107, 60%, 50%);
+}
+
+
 button, .btn {
     display: inline-block;
     color: #FFF;
@@ -274,8 +299,6 @@ button {
     font-family: sans-serif;
     position: relative;
     display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
     min-height: 12em;
     margin: 0 auto;
     margin-bottom: 2rem;
@@ -292,16 +315,19 @@ button {
 
 
 /* Title */
+.market-summary .content-wrapper {
+    padding-left: 10px;
+    max-width: calc(100% - 40px);
+}
 .market-summary h3.market-name  {
     display: flex;
-    margin-top: 0.5em;
+    margin-top: 0;
     margin-bottom: 0.5em;
 }
 .market-summary .market-name a {
     color: hsl(214, 86%, 55%);
     text-decoration: none;
     text-align: left;
-    padding-left: 20px;
     vertical-align: middle;
 }
 .market-summary .market-name a:focus,

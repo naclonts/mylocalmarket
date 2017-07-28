@@ -68,11 +68,11 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["c"] = local;
+/* harmony export (immutable) */ __webpack_exports__["b"] = local;
 /* unused harmony export detail */
 /* unused harmony export allDetails */
-/* harmony export (immutable) */ __webpack_exports__["e"] = toggleFavorite;
-/* harmony export (immutable) */ __webpack_exports__["b"] = latLonFromZip;
+/* harmony export (immutable) */ __webpack_exports__["c"] = toggleFavorite;
+/* harmony export (immutable) */ __webpack_exports__["a"] = latLonFromZip;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__http_promise__ = __webpack_require__(1);
 //  Wrapper for calls to retreive market data
 
@@ -195,19 +195,12 @@ const SITE_BASE_URL = '127.0.0.1:8000';
 
 // Todo: implement numberToAdd
 function summaries(zip, numberToAdd) {
-    return __WEBPACK_IMPORTED_MODULE_0__market_api_js__["c" /* local */](zip);
+    return __WEBPACK_IMPORTED_MODULE_0__market_api_js__["b" /* local */](zip);
 }
 
 function clearSummaries(markets, parent) {
     parent.empty();
     markets.lastDisplayed = 0;
-}
-
-function addSummary(market, parent) {
-    __WEBPACK_IMPORTED_MODULE_0__market_api_js__["marketSummary"](market).then(data => {
-        const summary = $(data);
-        parent.append(summary);
-    });
 }
 
 function addError(err, parent, message = "Looks like there was an error with this request.") {
@@ -273,7 +266,7 @@ function init() {
             $('#summary-wrapper').append($(html));
 
             // update
-            __WEBPACK_IMPORTED_MODULE_0__market_api_js__["b" /* latLonFromZip */](zipcode).then(coords => setMapCoords(map, coords));
+            __WEBPACK_IMPORTED_MODULE_0__market_api_js__["a" /* latLonFromZip */](zipcode).then(coords => setMapCoords(map, coords));
         })
         // show an error message if no results come back
         .catch(err => addError(err, $('#summary-wrapper'), "Looks like we weren't able to find anything in zip " + '"' + (zipcode || 'Zip code') + '".'));
