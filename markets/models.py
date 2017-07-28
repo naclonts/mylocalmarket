@@ -34,11 +34,17 @@ class Market(models.Model):
 
 
 class Profile(models.Model):
+    """
+    User-related information. In a one-to-one field relationship
+    with CustomUser, but is used to extend with additional attributes.
+    """
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     bio = models.TextField(max_length=1000, blank=True)
     location = models.CharField(max_length=50, blank=True)
-    address_zip = models.CharField(max_length=50, null=True)
+    address_zip = models.CharField(max_length=50, blank=True)
     favorite_markets = models.ManyToManyField(Market)
+    # Key to store session for anonymous users
+    session_key = models.CharField(max_length=60, blank=True)
 
     def __str__(self):
         return self.user.first_name

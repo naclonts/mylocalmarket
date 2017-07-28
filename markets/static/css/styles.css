@@ -360,6 +360,9 @@ button {
     width: 280px;
     vertical-align: baseline;
 }
+.form.flat-box {
+    flex-wrap: wrap;
+}
 
 label {
     font-weight: bold;
