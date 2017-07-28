@@ -1,0 +1,9 @@
+{% extends "./base.html" %}
+
+{% block menu_favorites %}_current{% endblock %}
+
+{% block content %}
+<div class="market-summary-wrapper">
+    {% include 'markets/multiple_summaries.html' %}
+</div>
+{% endblock %}

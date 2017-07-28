@@ -88,14 +88,25 @@ def toggle_favorite(request, market_id):
     a favorite.
     """
     if request.method == 'POST':
-        profile = request.user.profile
         market = get_object_or_404(Market, id=market_id)
+        favorites = request.user.profile.favorite_markets
 
-        if profile.favorite_markets.filter(id=market_id).exists():
-            profile.favorite_markets.remove(market)
-            response_text = 'Market added to favorites.'
-        else:
-            profile.favorite_markets.add(market)
+        # If it's currently a favorite, remove it
+        if favorites.filter(id=market_id).exists():
+            favorites.remove(market)
             response_text = 'Market removed from favorites.'
+        # Not a favorite: add it
+        else:
+            favorites.add(market)
+            response_text = 'Market added to favorites.'
 
         return HttpResponse(response_text, status=200)
+
+def favorites_list(request):
+    """
+    Returns a page with user's favorited markets.
+    """
+    favorites = request.user.profile.favorite_markets.all()
+    context = {'markets': favorites}
+    template = 'markets/favorites_list.html'
+    return render(request, template, context)

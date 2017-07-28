@@ -14,11 +14,11 @@ function init() {
     // Handle clicks to "favorites" button
     $('.market-summary-wrapper').on('click', '.favorite', function(e) {
         let market_id = this.id;
-        api.toggleFavorite(market_id).then(() => {
-            console.log(market_id);
+        api.toggleFavorite(market_id).then((message) => {
+            console.log(message);
             $('#' + market_id).toggleClass('favored');
         }).catch((err) => {
-            alert('Oops! An error occurred when trying to favorite the market with the id ' + market_id);
+            alert('Oops! An error occurred when trying to favorite the market with the ID ' + market_id);
             console.log(err);
         });
     });
