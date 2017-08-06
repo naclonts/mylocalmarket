@@ -18,4 +18,15 @@ npm run build
 
 (You can, alternatively, use `npm run watch` to have webpack automatically generate new JS files when you make a change to the source.)
 
-Right now, the settings are only configured for test servers (e.g., `python manage.py runserver`).
+MyLocalMarket uses PostgreSQL. Create a database named `mylocalmarket`, and create a user with all privileges. Add a file named `secret_settings.py` in the directory `mylocalmarket` and define the user's name and password (see `settings.py` for the exact variables that should be added).
+
+Run migrations:
+```shell
+python manage.py makemigrations
+python manage.py migrate
+```
+
+Run the `update-markets` custom Django command, which loads market data from the CSV into our Postgres database:
+```shell
+python manage.py update-markets
+```

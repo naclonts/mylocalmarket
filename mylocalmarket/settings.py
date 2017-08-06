@@ -12,6 +12,12 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 
+from .secret_settings import (
+    DATABASE_USER,
+    DATABASE_PASSWORD,
+    DJANGO_SECRET_KEY,
+)
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,7 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '1*t@@ce!=_!@*qig*_f7guq711e8tqh5%8%x7hzhgv6wr6d493'
+SECRET_KEY = DJANGO_SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -78,8 +84,12 @@ WSGI_APPLICATION = 'mylocalmarket.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'mylocalmarket',
+        'USER': DATABASE_USER,
+        'PASSWORD': DATABASE_PASSWORD,
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
