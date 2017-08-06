@@ -60,8 +60,8 @@ def update_user_profile(sender, instance, created, **kwargs):
 
 def get_or_create_profile(user, session):
     """
-    Returns the profile associated with `user`, or creates an anonymous profile
-    if the user isn't signed in and stores it in the session.
+    Returns the profile associated with `user`, or, if the user isn't signed in,
+    creates an anonymous profile and associates it with the session.
     """
     # For logged in users, return profile associated with them
     if user.is_authenticated():
