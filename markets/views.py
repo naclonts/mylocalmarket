@@ -13,20 +13,7 @@ from pyzipcode import ZipCodeDatabase
 from custom_auth.models import CustomUser
 
 from .forms import SearchForm, SignUpForm
-from .models import Market, Profile
-
-
-def get_or_create_profile(user, session_key):
-    """
-    Returns the profile associated with `user`, or creates an anonymous profile
-    if the user isn't signed in.
-    """
-    if user.is_authenticated():
-        return user.profile
-    else:
-        return Profile.objects.create(
-            user=CustomUser(),
-            session_key=session_key)
+from .models import Market, Profile, get_or_create_profile
 
 
 def search_page(request, zip='80526'):
@@ -54,13 +41,14 @@ def market_detail(request, market_id):
     Detailed view of a single market.
     """
     market = get_object_or_404(Market, id=market_id)
+    profile = get_or_create_profile(request.user, request.session)
 
     if request.is_ajax():
         template = 'markets/detail_data.html'
     else:
         template = 'markets/detail.html'
 
-    user_favorite = request.user.profile.favorite_markets.filter(id=market_id).exists()
+    user_favorite = profile.favorite_markets.filter(id=market_id).exists()
     data = serialize('json', Market.objects.filter(id=market_id))
     context = {
         'market': market,
@@ -83,7 +71,6 @@ def markets_within_zip(request, zip):
     return render(request, template, {'markets': markets, 'market_json': data})
 
 def signup(request):
-    import pdb; pdb.set_trace()
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -106,7 +93,7 @@ def toggle_favorite(request, market_id):
     """
     if request.method == 'POST':
         market = get_object_or_404(Market, id=market_id)
-        profile = get_or_create_profile(request.user, request.session.session_key)
+        profile = get_or_create_profile(request.user, request.session)
         favorites = profile.favorite_markets
 
         # If it's currently a favorite, remove it
@@ -124,7 +111,7 @@ def favorites_list(request):
     """
     Returns a page with user's favorited markets.
     """
-    profile = get_or_create_profile(request.user, request.session.session_key)
+    profile = get_or_create_profile(request.user, request.session)
     favorites = profile.favorite_markets.all()
     context = {'markets': favorites}
     template = 'markets/favorites_list.html'
