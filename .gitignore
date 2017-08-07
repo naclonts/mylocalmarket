@@ -1,7 +1,7 @@
 *.pyc
 /node_modules/
 staticfiles/
-/bundles/
+assets/bundles/
 *.sqlite3
 __pycache__
 secret_settings.py
