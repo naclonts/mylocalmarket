@@ -11,12 +11,10 @@ pip install -r requirements.txt
 npm install
 ```
 
-Then build the bundled JavaScript files with webpack:
+Then build the JavaScript files (using Babel with webpack to convert the ECMAScript6 to 'VanillaJS'):
 ```shell
-npm run build
+npm run build:dev
 ```
-
-(You can, alternatively, use `npm run watch` to have webpack automatically generate new JS files when you make a change to the source.)
 
 MyLocalMarket is set up to use PostgreSQL. Create a database named `mylocalmarket`, and create a user with all privileges. Add a file named `secret_settings.py` in the directory `mylocalmarket` and define the user's name and password (see `settings.py` for the exact variables that should be added).
 
