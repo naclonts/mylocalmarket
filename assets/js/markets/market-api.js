@@ -1,7 +1,10 @@
 //  Wrapper for calls to retreive market data
 
 import * as http from './http-promise';
-const BASE_SITE_URL = 'http://127.0.0.1:8000/';
+
+// Constant defined by webpack, depending on whether we're in a production or a
+// development environment
+const BASE_SITE_URL = __API_URL__;
 
 // Return summary of markets near zip
 export function local(zip, callback) {

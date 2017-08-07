@@ -77,7 +77,10 @@
 //  Wrapper for calls to retreive market data
 
 
-const BASE_SITE_URL = 'http://127.0.0.1:8000/';
+
+// Constant defined by webpack, depending on whether we're in a production or a
+// development environment
+const BASE_SITE_URL = 'http://localhost:8000/';
 
 // Return summary of markets near zip
 function local(zip, callback) {
@@ -133,7 +136,7 @@ const get = function (url, dataType = 'text') {
                 200: response => resolve(response)
             },
             error: (jqXHR, status, error) => {
-                reject(new Error('Failed to GET the thing - status ' + status));
+                reject(new Error(error));
             }
         });
     });
@@ -191,18 +194,12 @@ __webpack_require__(3);
 
 
 
-const SITE_BASE_URL = '127.0.0.1:8000';
-
-// Todo: implement numberToAdd
+// HTML for summaries of markets near a given zip code
 function summaries(zip, numberToAdd) {
     return __WEBPACK_IMPORTED_MODULE_0__market_api_js__["b" /* local */](zip);
 }
 
-function clearSummaries(markets, parent) {
-    parent.empty();
-    markets.lastDisplayed = 0;
-}
-
+// Post an error message when search fails
 function addError(err, parent, message = "Looks like there was an error with this request.") {
     console.log(err);
     const summary = $('<div/>').addClass('market-summary');
@@ -214,6 +211,7 @@ function addError(err, parent, message = "Looks like there was an error with thi
     parent.append(summary);
 }
 
+// Draw the Leaflet map with search results
 function initMap() {
     var map = L.map('search-map');
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
@@ -225,6 +223,7 @@ function initMap() {
     return map;
 }
 
+// Zoom in on a given area in the map
 function setMapCoords(map, coords, zoom = 11) {
     map.setView([coords.lat, coords.lon], zoom);
     var m = L.marker([coords.lat, coords.lat]).addTo(map);
@@ -249,6 +248,7 @@ function setMapCoords(map, coords, zoom = 11) {
     $('#market-data').empty();
 }
 
+// Put together the search results when the page loads
 function init() {
     // Listen for zip code search
     $('#submit-search').click(e => {

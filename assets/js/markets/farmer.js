@@ -2,18 +2,12 @@ require('leaflet.markercluster');
 
 import * as api from './market-api.js';
 
-const SITE_BASE_URL = '127.0.0.1:8000';
-
-// Todo: implement numberToAdd
+// HTML for summaries of markets near a given zip code
 function summaries(zip, numberToAdd) {
     return api.local(zip);
 }
 
-function clearSummaries(markets, parent) {
-    parent.empty();
-    markets.lastDisplayed = 0;
-}
-
+// Post an error message when search fails
 function addError(err, parent, message="Looks like there was an error with this request.") {
     console.log(err);
     const summary = $('<div/>').addClass('market-summary');
@@ -26,6 +20,7 @@ function addError(err, parent, message="Looks like there was an error with this 
 }
 
 
+// Draw the Leaflet map with search results
 function initMap() {
     var map = L.map('search-map');
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
@@ -37,6 +32,7 @@ function initMap() {
     return map;
 }
 
+// Zoom in on a given area in the map
 function setMapCoords(map, coords, zoom=11) {
     map.setView([coords.lat, coords.lon], zoom);
     var m = L.marker([coords.lat, coords.lat]).addTo(map);
@@ -61,7 +57,7 @@ function setMapCoords(map, coords, zoom=11) {
     $('#market-data').empty();
 }
 
-
+// Put together the search results when the page loads
 function init() {
     // Listen for zip code search
     $('#submit-search').click((e) => {

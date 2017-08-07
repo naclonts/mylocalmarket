@@ -12,7 +12,7 @@ export const get = function(url, dataType='text') {
                 200: (response) => resolve(response)
             },
             error: (jqXHR, status, error) => {
-                reject(new Error('Failed to GET the thing - status ' + status));
+                reject(new Error(error));
             }
         });
     });

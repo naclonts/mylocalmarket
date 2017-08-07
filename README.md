@@ -34,7 +34,7 @@ python manage.py update-markets
 Finally, set up a file called `secret_settings.py` in the `mylocalmarket` folder. An example of 'secret_settings' in a test/debug environment could look like this:
 
 ```python
-# Database table superuser to be used by Django
+# Private info on database superuser to be used by Django
 DATABASE_USER = 'my_admin_user'
 DATABASE_PASSWORD = 'awesome_password'
 

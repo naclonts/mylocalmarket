@@ -77,7 +77,10 @@
 //  Wrapper for calls to retreive market data
 
 
-const BASE_SITE_URL = 'http://127.0.0.1:8000/';
+
+// Constant defined by webpack, depending on whether we're in a production or a
+// development environment
+const BASE_SITE_URL = 'http://localhost:8000/';
 
 // Return summary of markets near zip
 function local(zip, callback) {
@@ -133,7 +136,7 @@ const get = function (url, dataType = 'text') {
                 200: response => resolve(response)
             },
             error: (jqXHR, status, error) => {
-                reject(new Error('Failed to GET the thing - status ' + status));
+                reject(new Error(error));
             }
         });
     });
