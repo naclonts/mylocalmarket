@@ -16,6 +16,8 @@ from .secret_settings import (
     DATABASE_USER,
     DATABASE_PASSWORD,
     DJANGO_SECRET_KEY,
+    IN_DEVELOPMENT,
+    HOSTS,
 )
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -29,9 +31,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = DJANGO_SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = IN_DEVELOPMENT == True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = HOSTS
 
 
 # Application definition
