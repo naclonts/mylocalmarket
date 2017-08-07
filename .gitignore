@@ -1,5 +1,6 @@
 *.pyc
 /node_modules/
+staticfiles/
 *.sqlite3
 __pycache__
 secret_settings.py
