@@ -40,6 +40,6 @@ function hostAPI(environment) {
         case 'production':
             return "'https://nathanclonts.com/mylocalmarket/'";
         case 'develop':
-            return "'http://localhost:8000/'";
+            return "'http://127.0.0.1:8000/'";
     }
 };

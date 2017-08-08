@@ -16,28 +16,15 @@ from .secret_settings import (
     DATABASE_USER,
     DATABASE_PASSWORD,
     DJANGO_SECRET_KEY,
-    IN_DEVELOPMENT,
-    HOSTS,
 )
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = DJANGO_SECRET_KEY
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = IN_DEVELOPMENT == True
-
-ALLOWED_HOSTS = HOSTS
-
-
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -135,7 +122,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = '/static/'
 
 # Webpack setup
 STATICFILES_DIRS = (
@@ -148,11 +134,3 @@ WEBPACK_LOADER = {
         'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
     }
 }
-
-
-# Post-login page
-LOGIN_REDIRECT_URL = '/'
-
-
-# Email test setup
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
