@@ -18,7 +18,14 @@
 <body>
     <header class="market-header _fixed">
         <div class="-container">
-            <a class="logo -link" href="{% url 'markets:search_page' %}">My Local Market</a>
+            <ol class="-list">
+                <li class="-item {%block menu_landing_page%}{%endblock%}">
+                    <a class="logo -link"
+                       href="{% url 'markets:landing_page' %}">
+                       My Local Market
+                   </a>
+               </li>
+           </ol>
 
             <form id="search" action="{% url 'markets:search_page' %}" method="post" class="searchbar" autocomplete="off" role="search">
                 {% csrf_token %}

@@ -16,6 +16,13 @@ from .forms import SearchForm, SignUpForm
 from .models import Market, Profile, get_or_create_profile
 
 
+def landing_page(request):
+    return render(
+        request,
+        'markets/landing_page.html',
+    )
+
+
 def search_page(request, zip='80526'):
     """
     Initial page.
@@ -31,7 +38,7 @@ def search_page(request, zip='80526'):
     #if this is just a GET, return page
     return render(
         request,
-        'markets/index.html',
+        'markets/search.html',
         context={'search_value': zip},
     )
 
