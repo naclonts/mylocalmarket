@@ -121,6 +121,67 @@ body {
 
 }
 
+/*******************************/
+/* Landing page
+/*******************************/
+.landing-page {
+    height: 100%;
+}
+
+.landing-page p,
+.landing-page li {
+    font-size: 1.1em;
+    line-height: 1.8em;
+}
+
+.first-slide {
+    height: 62%;
+    width: 100%;
+    background-color: hsl(122, 42%, 40%);
+    color: #FFF;
+}
+
+.first-slide div {
+    margin-left: 33%;
+    height: 50%;
+}
+
+.first-slide .tagline-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.first-slide .search-wrapper {
+    width: 33%;
+    display: flex;
+    justify-content: center;
+}
+
+.first-slide .search {
+    height: 60px;
+    line-height: 60px;
+    font-size: 1.33em;
+    width: calc(100% - 2em);
+    margin: 0 auto;
+    border-radius: 2px;
+}
+
+.second-slide {
+    display: flex;
+}
+
+.second-slide > div {
+    flex-grow: 1;
+    flex-basis: 0;
+    margin: 1em;
+}
+
+.second-slide h2, .second-slide p {
+    margin-top: 0;
+}
+
+
+
 
 /* Search form */
 /* Class activated when search input is selected. Expand the input over menu items. */
@@ -188,7 +249,7 @@ body {
     box-shadow: inset 0 0 1px hsla(210, 7%, 60%, 0.2),
                       0 0 0 hsla(0, 0%, 100%, 0);
     line-height: 1.4;
-    color: hsl(210, 7%, 25%);
+    color: hsl(210, 7%, 35%);
     background: #FFF;
     transition: all 600ms cubic-bezier(.165, .84, .44, 1);
 }
