@@ -2,7 +2,6 @@
 var path = require('path');
 var webpack = require('webpack');
 var BundleTracker = require('webpack-bundle-tracker');
-var apiHost;
 
 module.exports = {
     context: __dirname,
@@ -21,6 +20,9 @@ module.exports = {
         new BundleTracker({filename: './webpack-stats.json'}),
         new webpack.DefinePlugin({
             __API_URL__: hostAPI(process.env.NODE_ENV)
+        }),
+        new webpack.ProvidePlugin({
+            'Promise': 'es6-promise'
         })
     ],
 

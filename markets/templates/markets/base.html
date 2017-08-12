@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>My Local Market</title>
     <meta name="author" content="">
-    <meta name="description" content="Connect with local farmer's markets in your area">
+    <meta name="description" content="Connect with local farmers markets in your area">
     <meta name="keywords" content="farmers,markets,local,food,homemade,products">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}" type="text/css">
     {% block stylesheets %}{% endblock %}
@@ -42,7 +42,7 @@
             <nav class="navigation" role="navigation" aria-label="site navigation">
                 <ol class="-list">
                     <li class="-item {%block menu_search%}{%endblock%}">
-                        <a class="-link" href="{% url 'markets:search_page' %}">Farmer's Markets</a>
+                        <a class="-link" href="{% url 'markets:search_page' %}">Farmers Markets</a>
                     </li>
                     <li class="-item {%block menu_favorites%}{%endblock%}">
                         <a class="-link" href="{% url 'markets:favorites_list' %}">Favorites</a>
