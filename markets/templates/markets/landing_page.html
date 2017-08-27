@@ -4,15 +4,26 @@
 
 {% block menu_landing_page %}_current{% endblock %}
 
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'css/landing_page.css' %}" type="text/css">
+{% endblock %}
+
 {% block content %}
 <div class="landing-page">
     <div class="first-slide">
-        <div class="tagline-wrapper">
-            <h1>Eating fresh, made easy</h1>
-        </div>
-
         <div class="search-wrapper">
-            <input type="text" class="search f-input" />
+            <header class="search-header">
+                <h1>Eating fresh, made easy</h1>
+            </header>
+            <form class="search-form">
+                <input placeholder="Search for farmers markets in your area"
+                       type="text" class="search f-input" />
+                <button type="submit" id="submit-search-landing-page"
+                        class="btn js-search-submit">Search
+                </button>
+            </form>
+
+
         </div>
     </div>
 
