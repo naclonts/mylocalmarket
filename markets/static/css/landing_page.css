@@ -11,6 +11,10 @@
     line-height: 1.8em;
 }
 
+.landing-page h2 {
+    color: #777;
+}
+
 .first-slide {
     position: relative;
     height: 500px;
@@ -20,6 +24,11 @@
     display: flex;
     align-items: center;
     z-index: 10;
+}
+
+.landing-page em {
+    font-style: normal;
+    color: #777;
 }
 
 .image-wrapper {
@@ -75,15 +84,6 @@
 }
 
 .second-slide {
-    display: flex;
-}
-
-.second-slide > div {
-    flex-grow: 1;
-    flex-basis: 0;
-    margin: 2em;
-}
-
-.second-slide h2, .second-slide p {
-    margin-top: 0;
+    max-width: 610px;
+    margin: 2% auto;
 }
