@@ -9,12 +9,15 @@
         </h3>
 
         <div>
-            <a class="market-address" href="{{market.maps_link}}">
-                <p>{{market.address_street}}, {{market.address_city}}</p>
-                <p>{{market.address_state}}, {{market.address_zip}}</p>
+            <!-- Open link to address on map in new tab  -->
+            <a class="market-address" href="{{market.maps_link}}" target="_blank">
+                <p>{{market.address_street}}<br />
+                   {{market.address_city}}, {{market.address_state}} {{market.address_zip}}</p>
             </a>
+            <!-- Open link to market's website in new tab -->
             {% if market.website != None %}
-                <a href="{{market.website}}" title="Market Website"><p>Website</p></a>
+                <a href="{{market.website}}" title="Market Website" target="_blank">
+                    <p>Website</p></a>
             {% endif %}
         </div>
     </div>
