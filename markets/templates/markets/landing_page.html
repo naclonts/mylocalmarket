@@ -11,6 +11,11 @@
 {% block content %}
 <div class="landing-page">
     <div class="first-slide">
+        <!-- Background image -->
+        <div class="image-wrapper">
+            <img class="slide-bg-image" src="{{ MEDIA_URL }}landing_page.jpg" alt="Fresh produce" />
+        </div>
+
         <div class="search-wrapper">
             <header class="search-header">
                 <h1>Eating fresh, made easy</h1>
@@ -18,7 +23,7 @@
 
             <form id="search" action="{% url 'markets:search_page' %}" method="post" class="search-form" autocomplete="off" role="search">
                 {% csrf_token %}
-                <input placeholder="Search for farmers markets in your area"
+                <input placeholder="Search for farmers markets in your zip code"
                        name="search_value" type="text" class="search f-input js-search-field"
                        tabindex="1" autocomplete="off" maxlength="240" />
                 <button type="submit" id="submit-search-landing-page"

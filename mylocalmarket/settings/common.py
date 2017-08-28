@@ -60,6 +60,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                # Context processor for image handling
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -122,6 +125,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATIC_URL = '/static/'
+
+
+# Set MEDIA_URL and MEDIA_ROOT in development.py/production.py settings
+
 
 # Webpack setup
 STATICFILES_DIRS = (

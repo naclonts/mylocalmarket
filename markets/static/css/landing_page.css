@@ -12,12 +12,28 @@
 }
 
 .first-slide {
+    position: relative;
     height: 500px;
     width: 100%;
     background-color: hsl(122, 42%, 40%);
     color: #FFF;
     display: flex;
     align-items: center;
+    z-index: 10;
+}
+
+.image-wrapper {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.slide-bg-image {
+    position: absolute;
+    min-width: 100%;
+    min-height: 100%;
 }
 
 .first-slide .search-wrapper {
