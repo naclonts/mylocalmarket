@@ -124,6 +124,7 @@ body {
     background-color: #444;
     color: #ddd;
     padding: 1em 2em;
+    position: relative;
 }
 
 .nav-footer .link-list {
@@ -284,18 +285,25 @@ button {
 /********/
 /* Map */
 /******/
+.search-page-wrapper {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+}
+
 .search-map-wrapper {
     position: fixed;
-    float: left;
     height: calc(100vh - 60px);
     width: 600px;
 }
 #search-map {
-    float: left;
     height: 100%;
     width: 100%;
 }
 
+.search-page-wrapper .results {
+    margin-right: 0;
+}
 
 /* Summary info containers */
 .market-summary-wrapper, .flat-box-wrapper {
@@ -311,8 +319,8 @@ button {
     padding-left: .5rem;
     padding-right: .5rem;
 }
-.market-summary-wrapper.float-right {
-    float: right;
+.search-page-wrapper .market-summary-wrapper {
+    margin-right: 0;
     width: calc(100% - 600px);
 }
 

@@ -15,17 +15,22 @@
 {% endblock %}
 
 {% block content %}
+<div class="search-page-wrapper">
     <div class="search-map-wrapper">
         <div id="search-map" class="map"></div>
     </div>
 
-    <div class="market-summary-wrapper float-right" id="summary-wrapper">
-        <!-- Data filled in by JS -->
+    <div class="results">
+        <div class="market-summary-wrapper float-right" id="summary-wrapper">
+            <!-- Data filled in by JS -->
+        </div>
+
+        <div class="more-results-wrapper">
+            <button class="big-button" id="more-results">More results</button>
+        </div>
     </div>
 
-    <div class="more-results-wrapper">
-        <button class="big-button" id="more-results">More results</button>
-    </div>
+</div>
 {% endblock %}
 
 {% block scripts %}
