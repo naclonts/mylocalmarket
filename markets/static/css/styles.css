@@ -1,4 +1,4 @@
-html, body {
+html {
     height: 100%;
 }
 body {
@@ -111,14 +111,29 @@ body {
 .content-container {
     box-sizing: border-box;
     display: block;
-    float: left;
     position: relative;
     padding-top: 60px;
     padding-left: 0;
     padding-right: 0;
     height: 100%;
     width: 100%;
+}
 
+/* Footer */
+.nav-footer {
+    background-color: #444;
+    color: #ddd;
+    padding: 1em 2em;
+}
+
+.nav-footer .link-list {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+}
+
+.nav-footer .link-list a {
+    color: inherit;
 }
 
 /***************/
