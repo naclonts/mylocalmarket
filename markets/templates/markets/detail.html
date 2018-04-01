@@ -1,9 +1,48 @@
 {% extends "./base.html" %}
 {% load static %}
 {% load render_bundle from webpack_loader %}
+{% load market_extras %}
 
 {% block content %}
+<!-- Template for farmers market detail page -->
 <div id="market-summary-wrapper" class="market-summary-wrapper">
-    {% include "./detail_data.html" %}
+    <div class="market-summary flex-row">
+        <span class="favorite{% if request|has_favorite:market.id %} favored{% endif %}"
+            id="{{market.id}}">
+            {% include 'markets/corn_favorite_simple.svg' %}
+        </span>
+        <div class="content-wrapper">
+            <h3 class="market-name">
+                <a href="{% url 'markets:detail' market.id %}">{{market.name}}</a>
+            </h3>
+
+            <!-- Open link to market's website in new tab -->
+            {% if market.website != None %}
+                <a href="{{market.website}}" title="Market Website" target="_blank">
+                    <p><i class="fas fa-globe icon-blue"></i> Website</p></a>
+            {% endif %}
+
+            <div class="section">
+                <!-- Open link to address on map in new tab  -->
+                <h3>Location</h3>
+                <a class="market-address" href="{{market.maps_link}}" target="_blank">
+                    <p><i class="fas fa-map-marker-alt icon-blue"></i> {{market.address_street}}<br />
+                       {{market.address_city}}, {{market.address_state}} {{market.address_zip}}</p>
+                </a>
+            </div>
+
+            <div class="products-wrapper section">
+                <h3>Products available</h3>
+                <ul>
+                    {% if market.has_baked_goods %}<li>Baked Goods</li>{% endif %}
+                    {% if market.has_cheese %}<li>Cheese</li>{% endif %}
+                    {% if market.has_crafts %}<li><i class="fas fa-hand-holding-heart icon-grey"></i> Crafts</li>{% endif %}
+                    {% if market.has_flowers %}<li>Flowers</li>{% endif %}
+                    {% if market.has_eggs %}<li>Eggs</li>{% endif %}
+                    {% if market.has_seafood %}<li>Seafood</li>{% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock content %}

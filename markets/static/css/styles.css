@@ -117,6 +117,8 @@ body {
     padding-right: 0;
     height: 100%;
     width: 100%;
+    /* Set min-height to ensure footer is at the bottom of the page */
+    min-height: calc(100vh - 193px);
 }
 
 /* Footer */
@@ -333,15 +335,20 @@ button {
     min-height: 12em;
     margin: 0 auto;
     margin-bottom: 2rem;
-    padding-top: .9375rem;
-    padding-left: .9375rem;
-    padding-right: .9375rem;
+    padding: .9375rem;
     width: 90%;
+}
+
+.inline {
     max-width: 520px;
 }
 
 .market-summary a {
     color: #2c7ef0;
+}
+
+.section {
+    margin: 3em 0em;
 }
 
 
@@ -475,4 +482,10 @@ p input + div {
 }
 p input:focus + div {
     display: block;
+}
+
+
+/* Icons */
+.icon-blue {
+    color: hsl(210, 100%, 79%);
 }

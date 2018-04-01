@@ -18,6 +18,8 @@ from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
 
+app_name = "mylocalmarket"
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
@@ -25,7 +27,7 @@ urlpatterns = [
     url(r'^accounts/', include('django.contrib.auth.urls')),
 
     # main routes for site
-    url(r'', include('markets.urls', namespace='markets')),
+    url(r'', include('markets.urls')),
 
     # addendum for serving images in development
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

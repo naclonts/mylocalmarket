@@ -1,5 +1,6 @@
 {% load market_extras %}
-<div class="market-summary flex-row">
+<!-- Template to load via Ajax -->
+<div class="market-summary inline flex-row">
     <span class="favorite{% if request|has_favorite:market.id %} favored{% endif %}" id="{{market.id}}">
         {% include 'markets/corn_favorite_simple.svg' %}
     </span>
