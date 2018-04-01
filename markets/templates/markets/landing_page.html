@@ -23,7 +23,7 @@
 
             <form id="search" action="{% url 'markets:search_page' %}" method="post" class="search-form" autocomplete="off" role="search">
                 {% csrf_token %}
-                <input placeholder="Search for farmers markets in your zip code"
+                <input placeholder="Search by zip code"
                        name="search_value" type="text" class="search f-input js-search-field"
                        tabindex="1" autocomplete="off" maxlength="240" />
                 <button type="submit" id="submit-search-landing-page"
