@@ -8,7 +8,7 @@
 }
 
 .landing-page h2 {
-    color: #777;
+    color: hsl(90, 100%, 32%);
 }
 
 .first-slide {
@@ -82,4 +82,52 @@
 .second-slide {
     max-width: 610px;
     margin: 2% auto;
+}
+
+
+/********************/
+/* Quotes           */
+/********************/
+blockquote {
+    position: relative;
+    background: hsl(90, 95%, 95%);
+    border-left: 10px solid hsl(90, 48%, 47%);
+    margin: 1.5em 0;
+    padding: 0.5em 10px;
+    quotes: "\201C""\201D""\2018""\2019";
+}
+
+blockquote:before {
+    color: #aaa;
+    content: open-quote;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+}
+
+blockquote:after {
+    color: #aaa;
+    position: absolute;
+    content: close-quote;
+    font-size: 4em;
+    line-height: 0.1em;
+    right: 0;
+    vertical-align: -0.4em;
+}
+
+blockquote p {
+    margin-bottom: 0.33em;
+    margin-right: 2em;
+    display: inline;
+}
+
+.quote-attribution {
+    display: block;
+    margin-top: 1.5em;
+    margin-left: .5em;
+}
+
+.quote-attribution::before {
+    content: '— ';
 }
