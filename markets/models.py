@@ -7,6 +7,13 @@ import urllib.parse
 from custom_auth.models import CustomUser
 
 
+products = ["baked_goods", "cheese", "crafts", "flowers", "eggs", "seafood",
+            "herbs", "vegetables", "honey", "jams", "meat", "nursery", "nuts",
+            "plants", "poultry", "prepared_food", "soap", "trees", "wine",
+            "coffee", "beans", "fruits", "grains", "juices", "mushrooms",
+            "petfood", "tofu", "wild_harvested", "organic", "credit", "wic",
+            "wic_cash", "sfmnp", "snap"]
+
 class Market(models.Model):
     """
     Model to house information about a single farmers market.
@@ -73,6 +80,11 @@ class Market(models.Model):
         args = urllib.parse.quote(args, '()')
         url = 'https://maps.google.com/?q=' + args
         return url
+
+    @property
+    def product_count(self):
+        return len([p for p in products if getattr(self, 'has_' + p)])
+
 
 
 class Profile(models.Model):

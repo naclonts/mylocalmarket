@@ -391,6 +391,7 @@ button {
 }
 
 
+
 /**************************************************/
 /* Forms - mostly for registration and logging in */
 /**************************************************/
@@ -485,7 +486,22 @@ p input:focus + div {
 }
 
 
-/* Icons */
-.icon-blue {
+/* Color utility classes */
+.color-blue {
     color: hsl(210, 100%, 79%);
+}
+
+/* Icons */
+.svg-sprite {
+    display: none;
+}
+.product-icon {
+    width: 20px;
+    height: 20px;
+}
+.products-wrapper ul {
+    padding: 0;
+}
+.products-wrapper li {
+    list-style-type: none;
 }

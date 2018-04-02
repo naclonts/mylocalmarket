@@ -19,14 +19,14 @@
             <!-- Open link to market's website in new tab -->
             {% if market.website != None %}
                 <a href="{{market.website}}" title="Market Website" target="_blank">
-                    <p><i class="fas fa-globe icon-blue"></i> Website</p></a>
+                    <p><i class="fas fa-globe color-blue"></i> Website</p></a>
             {% endif %}
 
             <div class="section">
                 <!-- Open link to address on map in new tab  -->
                 <h3>Location</h3>
                 <a class="market-address" href="{{market.maps_link}}" target="_blank">
-                    <p><i class="fas fa-map-marker-alt icon-blue"></i> {{market.address_street}}<br />
+                    <p><i class="fas fa-map-marker-alt color-blue"></i> {{market.address_street}}<br />
                        {{market.address_city}}, {{market.address_state}} {{market.address_zip}}</p>
                 </a>
             </div>
@@ -34,12 +34,33 @@
             <div class="products-wrapper section">
                 <h3>Products available</h3>
                 <ul>
-                    {% if market.has_baked_goods %}<li>Baked Goods</li>{% endif %}
-                    {% if market.has_cheese %}<li>Cheese</li>{% endif %}
-                    {% if market.has_crafts %}<li><i class="fas fa-hand-holding-heart icon-grey"></i> Crafts</li>{% endif %}
+                    {% if market.has_vegetables %}<li><img class="product-icon color-blue" src="{{ MEDIA_URL }}product_icons/broccoli.png" alt="Vegetables" /> Vegetables</li>{% endif %}
+                    {% if market.has_fruits %}<li><img class="product-icon color-blue" src="{{ MEDIA_URL }}product_icons/apple.png" alt="Fruits" /> Fruits</li>{% endif %}
+                    {% if market.has_baked_goods %}<li><img class="product-icon color-blue" src="{{ MEDIA_URL }}product_icons/bread.png" alt="Baked goods" /> Baked goods</li>{% endif %}
+                    {% if market.has_cheese %}<li><img class="product-icon color-blue" src="{{ MEDIA_URL }}product_icons/cheese.png" alt="Cheese" /> Cheese</li>{% endif %}
+                    {% if market.has_eggs %}<li><img class="product-icon color-blue" src="{{ MEDIA_URL }}product_icons/eggs.png" alt="Eggs" /> Eggs</li>{% endif %}
+                    {% if market.has_seafood %}<li><img class="product-icon color-blue" src="{{ MEDIA_URL }}product_icons/seafood.png" alt="Seafood" /> Seafood</li>{% endif %}
+                    {% if market.has_coffee %}<li><img class="product-icon color-blue" src="{{ MEDIA_URL }}product_icons/coffee.png" alt="Coffee" /> Coffee</li>{% endif %}
+                    {% if market.has_herbs %}<li><img class="product-icon color-blue" src="{{ MEDIA_URL }}product_icons/herbs.png" alt="Herbs" /> Herbs</li>{% endif %}
+                    {% if market.has_meat %}<li><img class="product-icon color-blue" src="{{ MEDIA_URL }}product_icons/meat.png" alt="Meat" /> Meat</li>{% endif %}
+                    {% if market.has_poultry %}<li><img class="product-icon color-blue" src="{{ MEDIA_URL }}product_icons/chicken_leg.png" alt="Poultry" /> Poultry</li>{% endif %}
+                    {% if market.has_prepared_food %}<li><img class="product-icon color-blue" src="{{ MEDIA_URL }}product_icons/prepared_food.png" alt="Prepared food" /> Prepared food</li>{% endif %}
+                    {% if market.has_wine %}<li><img class="product-icon color-blue" src="{{ MEDIA_URL }}product_icons/wine.png" alt="Wine" /> Wine</li>{% endif %}
                     {% if market.has_flowers %}<li>Flowers</li>{% endif %}
-                    {% if market.has_eggs %}<li>Eggs</li>{% endif %}
-                    {% if market.has_seafood %}<li>Seafood</li>{% endif %}
+                    {% if market.has_honey %}<li>Honey</li>{% endif %}
+                    {% if market.has_jams %}<li>Jams</li>{% endif %}
+                    {% if market.has_nursery %}<li>Nursery</li>{% endif %}
+                    {% if market.has_plants %}<li>Plants</li>{% endif %}
+                    {% if market.has_nuts %}<li>Nuts</li>{% endif %}
+                    {% if market.has_crafts %}<li>Crafts</li>{% endif %}
+                    {% if market.has_soap %}<li>Soap</li>{% endif %}
+                    {% if market.has_trees %}<li>Trees</li>{% endif %}
+                    {% if market.has_beans %}<li>Beans</li>{% endif %}
+                    {% if market.has_grains %}<li>Grains</li>{% endif %}
+                    {% if market.has_juices %}<li>Juices</li>{% endif %}
+                    {% if market.has_mushrooms %}<li>Mushrooms</li>{% endif %}
+                    {% if market.has_petfood %}<li>Pet food</li>{% endif %}
+                    {% if market.has_tofu %}<li>Tofu</li>{% endif %}
                 </ul>
             </div>
         </div>
