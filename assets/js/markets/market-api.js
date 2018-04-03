@@ -9,7 +9,7 @@ const BASE_SITE_URL = __API_URL__;
 // Return summary of markets near zip
 export function local(zip, callback) {
     const url = BASE_SITE_URL + 'zip/' + zip;
-    return http.get(url, 'html');
+    return http.post(url);
 }
 
 // get detailed information for a certain market ID

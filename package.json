@@ -18,7 +18,11 @@
     "webpack-bundle-tracker": "^0.2.0"
   },
   "dependencies": {
+    "css-loader": "^0.28.11",
     "es6-promise": "^4.1.1",
-    "leaflet.markercluster": "^1.0.6"
+    "leaflet.markercluster": "^1.0.6",
+    "vue": "^2.5.16",
+    "vue-loader": "^14.2.2",
+    "vue-template-compiler": "^2.5.16"
   }
 }

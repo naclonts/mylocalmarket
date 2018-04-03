@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="search-page-wrapper">
+<div id="app" class="search-page-wrapper">
     <div class="search-map-wrapper">
         <div id="search-map" class="map"></div>
     </div>
@@ -23,6 +23,9 @@
     <div class="results">
         <div class="market-summary-wrapper float-right" id="summary-wrapper">
             <!-- Data filled in by JS -->
+            <market-summary v-for="market in markets"
+            :market="market.fields">
+            </market-summary>
         </div>
 
         <div class="more-results-wrapper">

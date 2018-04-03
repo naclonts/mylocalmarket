@@ -1,10 +1,13 @@
 require('leaflet.markercluster');
+import Vue from 'vue';
+import MarketSummary from '../components/market-summary.vue';
 
 import * as api from './market-api.js';
 
 // HTML for summaries of markets near a given zip code
-function summaries(zip, numberToAdd) {
-    return api.local(zip);
+async function summaries(zip, numberToAdd) {
+    let response = await api.local(zip);
+    return response;
 }
 
 // Post an error message when search fails
@@ -61,27 +64,27 @@ function setMapCoords(map, coords, zoom=11) {
 function init() {
     // Listen for zip code search
     $('#submit-search').click((e) => {
-        const zipcode = $('#search-value').val();
+        // const zipcode = $('#search-value').val();
 
         // prevent form submission and full-page reload
         // to give that "single-page app" feel
         e.preventDefault();
 
         // clear old results
-        $('.market-summary-wrapper').empty();
-
-        // load new results
-        summaries(zipcode, 9).then((html) => {
-            $('#summary-wrapper').append($(html));
-
-            // update
-            api.latLonFromZip(zipcode).then((coords) => setMapCoords(map, coords));
-        })
-        // show an error message if no results come back
-        .catch((err) => addError(err,
-                                $('#summary-wrapper'),
-                                "Looks like we weren't able to find anything in zip " +
-                                    '"' + (zipcode || 'Zip code') + '".'));
+        // $('.market-summary-wrapper').empty();
+        //
+        // // load new results
+        // summaries(zipcode, 9).then((html) => {
+        //     $('#summary-wrapper').append($(html));
+        //
+        //     // update
+        //     api.latLonFromZip(zipcode).then((coords) => setMapCoords(map, coords));
+        // })
+        // // show an error message if no results come back
+        // .catch((err) => addError(err,
+        //                         $('#summary-wrapper'),
+        //                         "Looks like we weren't able to find anything in zip " +
+        //                             '"' + (zipcode || 'Zip code') + '".'));
     });
 
     // simulate initial search
@@ -91,3 +94,22 @@ function init() {
 }
 
 $(document).ready(init);
+
+
+function startVue() {
+    let vm = new Vue({
+        delimiters: ['[[', ']]'],
+        el: '#app',
+        components: {
+            'market-summary': MarketSummary
+        },
+        data: {
+            markets: []
+        },
+        beforeMount: async function() {
+            this.markets = await summaries('80526');
+            console.log(this.markets);
+        }
+    })
+}
+window.onload = startVue;
