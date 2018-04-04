@@ -77,9 +77,10 @@ def markets_within_zip(request, zip):
     zip_codes = [z.zip for z in zip_db.get_zipcodes_around_radius(zip, 20)]
 
     markets = Market.objects.filter(address_zip__in=zip_codes)
-    data = json.loads(serialize('json', markets))
 
-    data_with_all = list(map(add_fields, data))
+    data = json.loads(serialize('json', markets))
+    data_with_all = map(add_fields, data)
+    import pdb; pdb.set_trace()
 
     if request.method == 'POST' and request.is_ajax():
         return HttpResponse(json.dumps(data_with_all), content_type='application/json')
@@ -88,11 +89,8 @@ def markets_within_zip(request, zip):
         return render(request, template, {'markets': markets, 'market_json': data})
 
 def add_fields(market):
-    # import pdb; pdb.set_trace()
-
-    # if market['fields']:
+    import pdb; pdb.set_trace()
     market['fields']['url'] = reverse('markets:detail', args=(market['pk'],))
-
     return market
 
 

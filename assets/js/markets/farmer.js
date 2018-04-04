@@ -108,8 +108,18 @@ function startVue() {
         },
         beforeMount: async function() {
             this.markets = await summaries('80526');
+            this.markets.sort((a, b) => {
+                return countProducts(a) < countProducts(b) ? -1 : 1
+            });
             console.log(this.markets);
         }
     })
 }
 window.onload = startVue;
+
+
+function countProducts(market) {
+    return Object.keys(market).filter((field) => {
+        return (field.substr(0,4) == 'has_' && market[field] == True);
+    }).length;
+}
