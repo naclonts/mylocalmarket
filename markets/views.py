@@ -72,6 +72,8 @@ def market_detail(request, market_id):
 def markets_within_zip(request, zip):
     """
     Return HTML containing markets within 20 miles of zip.
+
+    If requested via AJAX, will return JSON data for the markets.
     """
     zip_db = ZipCodeDatabase()
     zip_codes = [z.zip for z in zip_db.get_zipcodes_around_radius(zip, 20)]
@@ -79,8 +81,9 @@ def markets_within_zip(request, zip):
     markets = Market.objects.filter(address_zip__in=zip_codes)
 
     data = json.loads(serialize('json', markets))
-    # import pdb; pdb.set_trace()
-    data_with_all = map(add_fields, data)
+    profile = get_or_create_profile(request.user, request.session)
+    import pdb; pdb.set_trace()
+    data_with_all = map(lambda m: add_fields(m, profile), data)
 
     if request.method == 'POST' and request.is_ajax():
         return HttpResponse(json.dumps(list(data_with_all)), content_type='application/json')
@@ -88,9 +91,7 @@ def markets_within_zip(request, zip):
         template = 'markets/multiple_summaries.html'
         return render(request, template, {'markets': markets, 'market_json': data})
 
-def add_fields(market):
-    # import pdb; pdb.set_trace()
-
+def add_fields(market, profile):
     market['fields']['url'] = reverse('markets:detail', args=(market['pk'],))
     return market
 

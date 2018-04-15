@@ -79,34 +79,12 @@ let vm = new Vue({
     },
     mounted: async function() {
         this.map = initMap();
-        await this.searchZip('80526');
-
-        // Listen for zip code search
-        $('#submit-search').click((e) => {
-
-            // prevent form submission and full-page reload
-            // to give that "single-page app" feel
-            e.preventDefault();
-
-            let zipcode = $('#search-value').val();
-            this.searchZip(zipcode);
-
-            // // clear old results
-            // $('.market-summary-wrapper').empty();
-            //
-            // // load new results
-            // summaries(zipcode, 9).then((html) => {
-            //     $('#summary-wrapper').append($(html));
-            //
-            //     // update
-            //     api.latLonFromZip(zipcode).then((coords) => setMapCoords(map, coords));
-            // })
-            // // show an error message if no results come back
-            // .catch((err) => addError(err,
-            //                         $('#summary-wrapper'),
-            //                         "Looks like we weren't able to find anything in zip " +
-            //                             '"' + (zipcode || 'Zip code') + '".'));
-        });
+        try {
+            await this.searchZip(this.zipCode);
+        } catch (err) {
+            console.log(err);
+            this.markets = [];
+        }
     },
     methods: {
         searchZip: async function(zipCode) {
@@ -118,6 +96,17 @@ let vm = new Vue({
             this.coords = await api.latLonFromZip(zipCode);
             this.map = setMapCoords(this.map, this.coords, this.markets);
 
+        }
+    },
+    computed: {
+        zipCode: function() {
+            return $('#search-value').val();
+        },
+        errorMarket: function() {
+            return {
+                name: "Whoops",
+                address_street: `We couldn't find any markets in ${this.zipCode}.`
+            };
         }
     }
 });

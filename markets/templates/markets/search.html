@@ -22,10 +22,15 @@
 
     <div class="results">
         <div class="market-summary-wrapper float-right" id="summary-wrapper">
-            <!-- Data filled in by JS -->
+            <!-- Data filled in from server -->
             <market-summary v-for="market in markets"
             :market="market.fields">
             </market-summary>
+            <!-- Show error message if no markets -->
+            <market-summary class="error-market"
+                v-if="markets.length == 0"
+                :market="errorMarket"
+            ></market-summary>
         </div>
 
         <div class="more-results-wrapper">
@@ -37,8 +42,5 @@
 {% endblock %}
 
 {% block scripts %}
-<!-- <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
-  integrity="sha512-mNqn2Wg7tSToJhvHcqfzLMU6J4mkOImSPTxVZAdo+lcPlk+GhZmYgACEe0x35K7YzW1zJ7XyJV/TT1MrdXvMcA=="
-  crossorigin=""></script> -->
 {% render_bundle 'farmer' %}
 {% endblock %}
