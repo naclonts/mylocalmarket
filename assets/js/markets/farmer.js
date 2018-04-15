@@ -1,14 +1,10 @@
 require('leaflet.markercluster');
 import Vue from 'vue';
+import L from 'leaflet';
 import MarketSummary from '../components/market-summary.vue';
 
 import * as api from './market-api.js';
 
-// HTML for summaries of markets near a given zip code
-async function summaries(zip, numberToAdd) {
-    let response = await api.local(zip);
-    return response;
-}
 
 // Post an error message when search fails
 function addError(err, parent, message="Looks like there was an error with this request.") {
@@ -25,7 +21,7 @@ function addError(err, parent, message="Looks like there was an error with this 
 
 // Draw the Leaflet map with search results
 function initMap() {
-    var map = L.map('search-map');
+    var map = L.map('search-map').setView([38.63, -90.23], 12);
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
         maxZoom: 18,
@@ -36,13 +32,9 @@ function initMap() {
 }
 
 // Zoom in on a given area in the map
-function setMapCoords(map, coords, zoom=11) {
+function setMapCoords(map, coords, data, zoom=11) {
     map.setView([coords.lat, coords.lon], zoom);
     var m = L.marker([coords.lat, coords.lat]).addTo(map);
-
-    // Load farmers market data
-    let string = $('#market-data').text();
-    let data = JSON.parse(string);
 
     // Marker clustering handler
     const markers = L.markerClusterGroup();
@@ -55,67 +47,8 @@ function setMapCoords(map, coords, zoom=11) {
         markers.addLayer(m);
     }
     map.addLayer(markers);
-
-    // Clear JSON DOM element
-    $('#market-data').empty();
+    return map;
 }
-
-// Put together the search results when the page loads
-function init() {
-    // Listen for zip code search
-    $('#submit-search').click((e) => {
-        // const zipcode = $('#search-value').val();
-
-        // prevent form submission and full-page reload
-        // to give that "single-page app" feel
-        e.preventDefault();
-
-        // clear old results
-        // $('.market-summary-wrapper').empty();
-        //
-        // // load new results
-        // summaries(zipcode, 9).then((html) => {
-        //     $('#summary-wrapper').append($(html));
-        //
-        //     // update
-        //     api.latLonFromZip(zipcode).then((coords) => setMapCoords(map, coords));
-        // })
-        // // show an error message if no results come back
-        // .catch((err) => addError(err,
-        //                         $('#summary-wrapper'),
-        //                         "Looks like we weren't able to find anything in zip " +
-        //                             '"' + (zipcode || 'Zip code') + '".'));
-    });
-
-    // simulate initial search
-    $('#submit-search').click();
-
-    const map = initMap();
-}
-
-$(document).ready(init);
-
-
-function startVue() {
-    let vm = new Vue({
-        delimiters: ['[[', ']]'],
-        el: '#app',
-        components: {
-            'market-summary': MarketSummary
-        },
-        data: {
-            markets: []
-        },
-        beforeMount: async function() {
-            this.markets = await summaries('80526');
-            this.markets.sort((a, b) => {
-                return countProducts(a) < countProducts(b) ? -1 : 1
-            });
-            console.log(this.markets);
-        }
-    })
-}
-window.onload = startVue;
 
 
 function countProducts(market) {
@@ -123,3 +56,68 @@ function countProducts(market) {
         return (field.substr(0,4) == 'has_' && market[field] == True);
     }).length;
 }
+
+
+// JSON of markets near a given zip code
+async function marketData(zip, numberToAdd) {
+    let response = await api.local(zip);
+    return response;
+}
+
+
+
+let vm = new Vue({
+    delimiters: ['[[', ']]'],
+    el: '#app',
+    components: {
+        'market-summary': MarketSummary
+    },
+    data: {
+        markets: [],
+        coords: {},
+        map: null
+    },
+    mounted: async function() {
+        this.map = initMap();
+        await this.searchZip('80526');
+
+        // Listen for zip code search
+        $('#submit-search').click((e) => {
+
+            // prevent form submission and full-page reload
+            // to give that "single-page app" feel
+            e.preventDefault();
+
+            let zipcode = $('#search-value').val();
+            this.searchZip(zipcode);
+
+            // // clear old results
+            // $('.market-summary-wrapper').empty();
+            //
+            // // load new results
+            // summaries(zipcode, 9).then((html) => {
+            //     $('#summary-wrapper').append($(html));
+            //
+            //     // update
+            //     api.latLonFromZip(zipcode).then((coords) => setMapCoords(map, coords));
+            // })
+            // // show an error message if no results come back
+            // .catch((err) => addError(err,
+            //                         $('#summary-wrapper'),
+            //                         "Looks like we weren't able to find anything in zip " +
+            //                             '"' + (zipcode || 'Zip code') + '".'));
+        });
+    },
+    methods: {
+        searchZip: async function(zipCode) {
+            let markets = await marketData(zipCode);
+            markets.sort((a, b) => {
+                return countProducts(a) < countProducts(b) ? -1 : 1
+            });
+            this.markets = markets;
+            this.coords = await api.latLonFromZip(zipCode);
+            this.map = setMapCoords(this.map, this.coords, this.markets);
+
+        }
+    }
+});
