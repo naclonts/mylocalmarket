@@ -304,7 +304,7 @@ button {
 }
 
 .search-page-wrapper .results {
-    margin-right: 0;
+    margin-left: 600px;
 }
 
 /* Summary info containers */
@@ -322,8 +322,6 @@ button {
     padding-right: .5rem;
 }
 .search-page-wrapper .market-summary-wrapper {
-    margin-right: 0;
-    width: calc(100% - 600px);
 }
 
 .market-summary,

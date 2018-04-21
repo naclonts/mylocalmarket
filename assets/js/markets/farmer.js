@@ -6,19 +6,6 @@ import MarketSummary from '../components/market-summary.vue';
 import * as api from './market-api.js';
 
 
-// Post an error message when search fails
-function addError(err, parent, message="Looks like there was an error with this request.") {
-    console.log(err);
-    const summary = $('<div/>').addClass('market-summary');
-    const name = $('<h3/>').addClass('market-name');
-    name.text('Oops!');
-    summary.append(name);
-    summary.append($('<p/>').text(message));
-
-    parent.append(summary);
-}
-
-
 // Draw the Leaflet map with search results
 function initMap() {
     var map = L.map('search-map').setView([38.63, -90.23], 12);

@@ -102,7 +102,10 @@ class Profile(models.Model):
     session_key = models.CharField(max_length=60, null=True, blank=True)
 
     def __str__(self):
-        return self.user.first_name
+        if self.user:
+            return self.user.first_name
+        else:
+            return 'Anonymous profile'
 
 
 @receiver(post_save, sender=CustomUser)

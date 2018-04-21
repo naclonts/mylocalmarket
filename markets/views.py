@@ -82,7 +82,7 @@ def markets_within_zip(request, zip):
 
     data = json.loads(serialize('json', markets))
     profile = get_or_create_profile(request.user, request.session)
-    import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()
     data_with_all = map(lambda m: add_fields(m, profile), data)
 
     if request.method == 'POST' and request.is_ajax():
