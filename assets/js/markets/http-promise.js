@@ -21,7 +21,6 @@ export const get = function(url, dataType='text') {
 
 // Implementation with jQuery
 export const post = function(url) {
-    console.log('hi')
     const token = getCookie('csrftoken');
     // return new pending promise
     console.log(token, url)

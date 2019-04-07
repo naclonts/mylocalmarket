@@ -18,6 +18,8 @@ module.exports = {
 
     devtool: 'source-map',
 
+    mode: process.env.NODE_ENV === 'develop' ? 'development' : 'production',
+
     plugins: [
         new BundleTracker({filename: './webpack-stats.json'}),
         new webpack.DefinePlugin({
