@@ -34,10 +34,8 @@ export function toggleFavorite(id) {
 
 
 export function latLonFromZip(zip) {
-    let url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + zip;
+    let url = BASE_SITE_URL + 'zip-coords/' + zip;
     return http.get(url, 'json').then((data) => {
-        let lat = data['results'][0]['geometry']['location']['lat'];
-        let lon = data['results'][0]['geometry']['location']['lng'];
-        return {'lat': lat, 'lon': lon};
+        return {'lat': data.lat, 'lon': data.lon};
     });
 }

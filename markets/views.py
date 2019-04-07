@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.generic.base import TemplateView
+import json
 
 # Nearby ZIP code lookups
 from pyzipcode import ZipCodeDatabase
@@ -76,6 +77,15 @@ def markets_within_zip(request, zip):
     data = serialize('json', markets)
     template = 'markets/multiple_summaries.html'
     return render(request, template, {'markets': markets, 'market_json': data})
+
+def zip_coords(request, zipcode):
+    """
+    Returns latitude and longitude of given zipcode.
+    """
+    zip_db = ZipCodeDatabase()
+    zip_data = zip_db[zipcode]
+    coords = dict(lat=zip_data.latitude, lon=zip_data.longitude)
+    return HttpResponse(json.dumps(coords), status=200)
 
 def signup(request):
     if request.method == 'POST':
