@@ -2,8 +2,11 @@ appdirs==1.4.3
 certifi==2019.3.9
 chardet==3.0.4
 Django==2.2
+django-cors-headers==2.5.2
 django-webpack-loader==0.6.0
 djangorestframework==3.9.2
 idna==2.8
+psycopg2==2.8.1
 pytz==2018.9
+pyzipcode3==2.2
 sqlparse==0.3.0
