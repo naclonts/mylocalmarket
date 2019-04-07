@@ -106,7 +106,7 @@ def get_or_create_profile(user, session):
     creates an anonymous profile and associates it with the session.
     """
     # For logged in users, return profile associated with them
-    if user.is_authenticated():
+    if user.is_authenticated:
         return user.profile
 
     # Use session key to get anonymous profile

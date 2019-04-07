@@ -1,6 +1,8 @@
 from django.conf.urls import url, include
 from . import views
 
+app_name = 'markets'
+
 urlpatterns = [
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^market/(?P<market_id>\d+)$', views.market_detail, name='detail'),
