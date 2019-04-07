@@ -1,5 +1,6 @@
 // Implementation with jQuery
 export const get = function(url, dataType='text') {
+    const token = getCookie('csrftoken');
     // return new pending promise
     return new Promise((resolve, reject) => {
         $.ajax({
@@ -20,8 +21,10 @@ export const get = function(url, dataType='text') {
 
 // Implementation with jQuery
 export const post = function(url) {
+    console.log('hi')
     const token = getCookie('csrftoken');
     // return new pending promise
+    console.log(token, url)
     return new Promise((resolve, reject) => {
         $.ajax({
             url: url,

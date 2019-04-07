@@ -13,8 +13,10 @@ module.exports = {
 
     output: {
         path: path.resolve('./assets/bundles/'),
-        filename: '[name].js',
+        filename: '[name]-[hash].js',
     },
+
+    devtool: 'source-map',
 
     plugins: [
         new BundleTracker({filename: './webpack-stats.json'}),
@@ -27,13 +29,24 @@ module.exports = {
     ],
 
     module: {
-        rules: [ {
+        rules: [
+            {
                 test: /\.js$/,
                 loader: 'babel-loader',
                 exclude: /node_modules/,
             },
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader',
+            },
         ],
     },
+
+    resolve: {
+        alias: {
+            vue: 'vue/dist/vue.js'
+        }
+    }
 
 }
 

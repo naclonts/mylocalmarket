@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config ./webpack.production.config.js --progress --colors --watch",
+    "build": "webpack --config ./webpack.production.config.js --colors --watch",
     "build:production": "NODE_ENV=production npm run build",
     "build:dev": "NODE_ENV=develop npm run build"
   },
@@ -19,7 +19,12 @@
     "webpack-cli": "^3.3.0"
   },
   "dependencies": {
+    "css-loader": "^2.1.1",
     "es6-promise": "^4.1.1",
-    "leaflet.markercluster": "^1.0.6"
+    "leaflet": "^1.4.0",
+    "leaflet.markercluster": "^1.0.6",
+    "vue": "^2.6.10",
+    "vue-loader": "^14.2.4",
+    "vue-template-compiler": "^2.6.10"
   }
 }

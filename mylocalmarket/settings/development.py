@@ -14,3 +14,6 @@ MEDIA_ROOT = '/var/www/media/mylocalmarket/'
 # Email test setup
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 CORS_ORIGIN_ALLOW_ALL = DEBUG
+CORS_ORIGIN_WHITELIST = (
+	'localhost:8000',
+)

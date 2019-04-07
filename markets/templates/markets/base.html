@@ -13,6 +13,8 @@
     <meta name="keywords" content="farmers,markets,local,food,homemade,products">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}" type="text/css">
     {% block stylesheets %}{% endblock %}
+    <!-- Font Awesome icon set -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -33,7 +35,7 @@
                 <svg role="icon" class="svg-icon iconSearch" width="18" height="18" viewBox="0 0 18 18">
                     <path d="M12.864 11.321L18 16.5 16.5 18l-5.178-5.136v-.357a7 7 0 1 1 1.186-1.186h.356zM7 12A5 5 0 1 0 7 2a5 5 0 0 0 0 10z"></path>
                 </svg>
-                <input id="search-value" name="search_value" type="text" placeholder="Search..."
+                <input id="search-value" name="search_value" type="text" placeholder="Search by zip code"
                         value="{% if search_value %}{{search_value}}{% endif %}"
                         tabindex="1" autocomplete="off" maxlength="240"
                         class="f-input js-search-field"></input>
@@ -87,7 +89,7 @@
         <div>
             <h3>MyLocalMarket</h3>
             <p>Built with love in Fort Collins, CO</p>
-            <p>© Copyright Nathan Clonts</p>
+            <p>© Copyright Nathan Clonts {% now "Y" %}</p>
 
             <ul class="link-list">
                 <li><a href="https://nathanclonts.com/#contact">Contact</a></li>

@@ -4,8 +4,12 @@ from django.core.serializers import serialize
 from django.forms.models import model_to_dict
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.generic.base import TemplateView
+import json
+
+from operator import attrgetter
 import json
 
 # Nearby ZIP code lookups
@@ -65,18 +69,32 @@ def market_detail(request, market_id):
     }
     return render(request, template, context=context)
 
-@ensure_csrf_cookie
 def markets_within_zip(request, zip):
     """
     Return HTML containing markets within 20 miles of zip.
+
+    If requested via AJAX, will return JSON data for the markets.
     """
     zip_db = ZipCodeDatabase()
     zip_codes = [z.zip for z in zip_db.get_zipcodes_around_radius(zip, 20)]
 
     markets = Market.objects.filter(address_zip__in=zip_codes)
-    data = serialize('json', markets)
-    template = 'markets/multiple_summaries.html'
-    return render(request, template, {'markets': markets, 'market_json': data})
+
+    data = json.loads(serialize('json', markets))
+    profile = get_or_create_profile(request.user, request.session)
+    # import pdb; pdb.set_trace()
+    data_with_all = map(lambda m: add_fields(m, profile), data)
+
+    if request.method == 'POST' and request.is_ajax():
+        return HttpResponse(json.dumps(list(data_with_all)), content_type='application/json')
+    else:
+        template = 'markets/multiple_summaries.html'
+        return render(request, template, {'markets': markets, 'market_json': data})
+
+def add_fields(market, profile):
+    market['fields']['url'] = reverse('markets:detail', args=(market['pk'],))
+    return market
+
 
 def zip_coords(request, zipcode):
     """

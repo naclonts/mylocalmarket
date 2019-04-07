@@ -117,6 +117,8 @@ body {
     padding-right: 0;
     height: 100%;
     width: 100%;
+    /* Set min-height to ensure footer is at the bottom of the page */
+    min-height: calc(100vh - 193px);
 }
 
 /* Footer */
@@ -302,7 +304,7 @@ button {
 }
 
 .search-page-wrapper .results {
-    margin-right: 0;
+    margin-left: 600px;
 }
 
 /* Summary info containers */
@@ -320,8 +322,6 @@ button {
     padding-right: .5rem;
 }
 .search-page-wrapper .market-summary-wrapper {
-    margin-right: 0;
-    width: calc(100% - 600px);
 }
 
 .market-summary,
@@ -333,10 +333,11 @@ button {
     min-height: 12em;
     margin: 0 auto;
     margin-bottom: 2rem;
-    padding-top: .9375rem;
-    padding-left: .9375rem;
-    padding-right: .9375rem;
+    padding: .9375rem;
     width: 90%;
+}
+
+.inline {
     max-width: 520px;
 }
 
@@ -344,44 +345,12 @@ button {
     color: #2c7ef0;
 }
 
-
-/* Title */
-.market-summary .content-wrapper {
-    padding-left: 10px;
-    max-width: calc(100% - 40px);
-}
-.market-summary h3.market-name  {
-    display: flex;
-    margin-top: 0;
-    margin-bottom: 0.5em;
-}
-.market-summary .market-name a {
-    color: hsl(214, 86%, 55%);
-    text-decoration: none;
-    text-align: left;
-    vertical-align: middle;
-}
-.market-summary .market-name a:focus,
-.market-summary .market-name a:hover {
-    color: hsl(215, 77%, 37%);
+.section {
+    margin: 3em 0em;
 }
 
-/* Non-title linked elements in market summary */
-.market-summary a,
-.flat-box a {
-    margin: 0;
-    color: inherit;
-    text-decoration: none;
-}
-.market-summary a:hover,
-.flat-box a:hover {
-    color: #666;
-}
 
-.market-address {
-    text-transform: capitalize;
-    text-decoration: none;
-}
+
 
 
 /**************************************************/
@@ -475,4 +444,25 @@ p input + div {
 }
 p input:focus + div {
     display: block;
+}
+
+
+/* Color utility classes */
+.color-blue {
+    color: hsl(210, 100%, 79%);
+}
+
+/* Icons */
+.svg-sprite {
+    display: none;
+}
+.product-icon {
+    width: 20px;
+    height: 20px;
+}
+.products-wrapper ul {
+    padding: 0;
+}
+.products-wrapper li {
+    list-style-type: none;
 }
